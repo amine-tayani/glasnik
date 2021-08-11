@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Inter&family=Titillium+Web&display=swap");
+
+@layer utilities {
+  #messages::-webkit-scrollbar {
+    width: 5px;
+    @apply bg-gray-100 rounded-full;
+  }
+  #messages::-webkit-scrollbar-thumb {
+    @apply bg-gray-300  rounded-xl;
+  }
+}
