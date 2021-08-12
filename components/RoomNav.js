@@ -1,8 +1,8 @@
-import React from "react"
-import { useState } from "react"
+/* eslint-disable react/jsx-filename-extension */
+import React, { useState } from "react";
 
 const RoomNav = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <div className=" shadow-md font-sand">
@@ -11,34 +11,44 @@ const RoomNav = () => {
         <div className="relative flex items-center justify-between">
           <a href="/" className="inline-flex items-center">
             <div className="inline-flex items-center">
-              <div className="w-3 h-3 p-3 mr-2 rounded-full bg-gradient-to-tr  from-indigo-400 to-blue-700"></div>
+              <div className="w-3 h-3 p-3 mr-2 rounded-full bg-gradient-to-tr  from-indigo-400 to-blue-700" />
               <h2 className="block p-2 text-xl font-tweb font-extrabold tracking-widest transition duration-500 ease-in-out transform cursor-pointer lg:text-2xl lg:mr-8">
                 {" "}
                 Glasnik{" "}
               </h2>
             </div>
           </a>
-          <ul className="flex items-center hidden space-x-10 lg:flex lg:mr-40">
+          <ul className="items-center hidden space-x-10 lg:flex lg:mr-40">
             <li>
-              <button className="font-semibold text-base text-gray-700 transition-colors duration-200 ">
+              <button
+                type="button"
+                className="font-semibold text-base text-gray-700 transition-colors duration-200 "
+              >
                 Conversation
               </button>
             </li>
             <li>
-              <button className="font-semibold  text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400">
+              <button
+                type="button"
+                className="font-semibold  text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+              >
                 Contacts
               </button>
             </li>
             <li>
-              <button className="font-semibold  text-gray-700 transition-colors duration-200 ">
+              <button
+                type="button"
+                className="font-semibold  text-gray-700 transition-colors duration-200 "
+              >
                 Setting
               </button>
             </li>
           </ul>
-          <ul className="flex items-center hidden space-x-8 lg:flex">
+          <ul className=" items-center hidden space-x-8 lg:flex">
             <li>
               <div className="relative">
                 <button
+                  type="button"
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
                   className="block h-10 w-10 rounded-full overflow-hidden focus:outline-none"
                 >
@@ -52,16 +62,16 @@ const RoomNav = () => {
                 {isMenuOpen && (
                   <div className="absolute right-0 w-40 mt-2 py-2 bg-white border rounded shadow-xl">
                     <a
-                      href="#"
+                      href="#setting"
                       className="transition-colors duration-200 block px-4 py-2 text-normal text-gray-900 rounded hover:bg-purple-500 hover:text-white"
                     >
                       Settings
                     </a>
                     <div className="py-2">
-                      <hr></hr>
+                      <hr />
                     </div>
                     <a
-                      href="#"
+                      href="#logout"
                       className="transition-colors duration-200 block px-4 py-2 text-normal text-gray-900 rounded hover:bg-purple-500 hover:text-white"
                     >
                       Logout
@@ -73,6 +83,7 @@ const RoomNav = () => {
           </ul>
           <div className="lg:hidden">
             <button
+              type="button"
               aria-label="Open Menu"
               title="Open Menu"
               className="p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-deep-purple-50 focus:bg-deep-purple-50"
@@ -98,7 +109,7 @@ const RoomNav = () => {
                 <div className="p-5 bg-white border rounded shadow-sm">
                   <div className="flex items-center justify-between mb-4">
                     <div className="inline-flex items-center">
-                      <div className="w-3 h-3 p-3 mr-2 rounded-full bg-gradient-to-tr  from-indigo-400 to-blue-700"></div>
+                      <div className="w-3 h-3 p-3 mr-2 rounded-full bg-gradient-to-tr  from-indigo-400 to-blue-700" />
                       <h2 className="block p-2 text-xl font-tweb font-extrabold tracking-widest transition duration-500 ease-in-out transform cursor-pointer lg:text-2xl lg:mr-8">
                         {" "}
                         Glasnik{" "}
@@ -106,6 +117,7 @@ const RoomNav = () => {
                     </div>
                     <div>
                       <button
+                        type="button"
                         aria-label="Close Menu"
                         title="Close Menu"
                         className="p-2 -mt-2 -mr-2 transition duration-200 rounded hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
@@ -161,7 +173,7 @@ const RoomNav = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default RoomNav
+export default RoomNav;

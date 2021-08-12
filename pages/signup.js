@@ -1,24 +1,41 @@
-import Head from "next/head"
-import Link from "next/link"
-import { useRouter } from "next/router"
-import { CREATE_ACCOUNT } from "../graphql/mutations/auth"
-import { useMutation } from "@apollo/client"
-import { useState } from "react"
-const Signup = () => {
-  const router = useRouter()
-  const [username, setUsername] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [createAccount, { data, loading, error }] = useMutation(CREATE_ACCOUNT)
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-shadow */
 
-  const creatingAccount = (e) => {
-    e.preventDefault()
-    createAccount({ variables: { username, email, password } })
-    setUsername("")
-    setEmail("")
-    setPassword("")
-    router.push("/")
+import Head from "next/head";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useMutation } from "@apollo/client";
+import { useForm } from "react-hook-form";
+import React from "react";
+import { CREATE_ACCOUNT } from "../graphql/mutations/auth";
+
+const Signup = () => {
+  const { handleSubmit, register } = useForm();
+  const router = useRouter();
+  const [createAccount, { data, loading, error }] = useMutation(CREATE_ACCOUNT);
+
+  if (data) {
+    console.log(data);
   }
+
+  const signup = async (data) => {
+    try {
+      await createAccount({
+        variables: {
+          username: data.username,
+          email: data.email,
+          password: data.password,
+        },
+      });
+      console.log(error.name, data, loading);
+      router.push("/");
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   return (
     <div>
@@ -31,58 +48,71 @@ const Signup = () => {
         <div className="container mx-auto items-center px-5 py-12 lg:px-20">
           <div className="flex flex-col w-full p-10 mx-auto my-6 transition duration-500 ease-in-out transform bg-white shadow-2xl   rounded-lg lg:w-2/6 md:w-1/2 md:mt-0">
             <div className="flex justify-center items-center mb-4">
-              <div className="w-3 h-3 p-3 mr-2 rounded-full bg-gradient-to-tr  from-indigo-400 to-blue-700"></div>
+              <div className="w-3 h-3 p-3 mr-2 rounded-full bg-gradient-to-tr  from-indigo-400 to-blue-700" />
               <h2 className="block p-2 text-xl font-tweb font-extrabold tracking-widest transition duration-500 ease-in-out transform cursor-pointer lg:text-3xl lg:mr-8">
                 Glasnik
               </h2>
             </div>
-            {error && <p className="text-xs text-red-600">{error.message}</p>}
-            <form onSubmit={creatingAccount}>
+            <form onSubmit={handleSubmit(signup)}>
               <div>
                 <div className="relative ">
-                  <label htmlFor="email" className="text-sm  font-bold leading-7 text-gray-700">
+                  <label
+                    htmlFor="email"
+                    className="text-sm  font-bold leading-7 text-gray-700"
+                  >
                     What's your email?
                   </label>
-
                   <input
-                    onChange={(e) => {
-                      setEmail(e.target.value)
-                    }}
+                    {...register("email", { required: true })}
                     type="text"
-                    onFocus={(e) => (e.target.placeholder = "")}
-                    onBlur={(e) => (e.target.placeholder = "Enter your email")}
+                    onFocus={(e) => {
+                      e.target.placeholder = "";
+                    }}
+                    onBlur={(e) => {
+                      e.target.placeholder = "Enter your email";
+                    }}
                     name="email"
                     placeholder="Enter your email"
                     className="w-full px-4 py-2 mt-2 text-base border border-gray-400 transition duration-300 ease-in-out transform rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent "
                   />
                 </div>
                 <div className="relative mt-4">
-                  <label htmlFor="username" className="text-sm  font-bold leading-7 text-gray-700">
+                  <label
+                    htmlFor="username"
+                    className="text-sm  font-bold leading-7 text-gray-700"
+                  >
                     What should we call you?
                   </label>
                   <input
-                    onChange={(e) => {
-                      setUsername(e.target.value)
-                    }}
+                    {...register("username", { required: true })}
                     type="text"
-                    onFocus={(e) => (e.target.placeholder = "")}
-                    onBlur={(e) => (e.target.placeholder = "Enter a username")}
+                    onFocus={(e) => {
+                      e.target.placeholder = "";
+                    }}
+                    onBlur={(e) => {
+                      e.target.placeholder = "Enter a username";
+                    }}
                     name="username"
                     placeholder="Enter a username"
                     className="w-full px-4 py-2 mt-2 text-base border border-gray-400 transition duration-300 ease-in-out transform rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-700"
                   />
                 </div>
                 <div className="relative mt-4">
-                  <label htmlFor="password" className="text-sm  font-bold leading-7 text-gray-700">
+                  <label
+                    htmlFor="password"
+                    className="text-sm  font-bold leading-7 text-gray-700"
+                  >
                     Create a password
                   </label>
                   <input
-                    onChange={(e) => {
-                      setPassword(e.target.value)
-                    }}
+                    {...register("password", { required: true })}
                     type="password"
-                    onFocus={(e) => (e.target.placeholder = "")}
-                    onBlur={(e) => (e.target.placeholder = "Type a password")}
+                    onFocus={(e) => {
+                      e.target.placeholder = "";
+                    }}
+                    onBlur={(e) => {
+                      e.target.placeholder = "Type a password";
+                    }}
                     name="password"
                     placeholder="Type a password"
                     className="w-full px-4 py-2 mt-2 text-base border border-gray-400 transition duration-300 ease-in-out transform rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-700"
@@ -97,13 +127,17 @@ const Signup = () => {
                     Sign Up
                   </button>
                   <Link href="/login">
-                    <button className="w-full px-8 py-3 my-2  font-semibold text-base transform tracking-wider transition duration-500 ease-in-out bg-gray-100 hover:bg-gray-200 text-black focus:outline-none rounded-lg">
+                    <button
+                      type="button"
+                      className="w-full px-8 py-3 my-2  font-semibold text-base transform tracking-wider transition duration-500 ease-in-out bg-gray-100 hover:bg-gray-200 text-black focus:outline-none rounded-lg"
+                    >
                       Log In
                     </button>
                   </Link>
                 </div>
                 <p className="mx-auto mt-3 text-xs text-gray-500 font-tweb">
-                  By clicking on sign-up, you agree to Glasnik's Terms and Conditions of Use.
+                  By clicking on sign-up, you agree to Glasnik's Terms and
+                  Conditions of Use.
                 </p>
               </div>
             </form>
@@ -111,7 +145,7 @@ const Signup = () => {
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;
