@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-filename-extension */
 import { SearchIcon, MenuAlt3Icon } from "@heroicons/react/outline";
 import React from "react";
 

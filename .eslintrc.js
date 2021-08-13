@@ -14,5 +14,9 @@ module.exports = {
   plugins: ["react"],
   rules: {
     "no-console": "off",
+    "react/jsx-filename-extension": "off",
+    "react/prop-types": "off",
+    "react/jsx-props-no-spreading": "off",
+    "no-shadow": "off",
   },
 };

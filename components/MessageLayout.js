@@ -1,7 +1,5 @@
-/* eslint-disable react/jsx-filename-extension */
 import React from "react";
 
-// eslint-disable-next-line react/prop-types
 const MessageLayout = ({ isOwner }) => (
   <>
     {isOwner ? (

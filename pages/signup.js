@@ -1,9 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable react/jsx-filename-extension */
-/* eslint-disable no-shadow */
-
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -60,21 +54,21 @@ const Signup = () => {
                     htmlFor="email"
                     className="text-sm  font-bold leading-7 text-gray-700"
                   >
-                    What's your email?
+                    What&apos;s your email?
+                    <input
+                      {...register("email", { required: true })}
+                      type="text"
+                      onFocus={(e) => {
+                        e.target.placeholder = "";
+                      }}
+                      onBlur={(e) => {
+                        e.target.placeholder = "Enter your email";
+                      }}
+                      name="email"
+                      placeholder="Enter your email"
+                      className="w-full px-4 py-2 mt-2 text-base border border-gray-400 transition duration-300 ease-in-out transform rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent "
+                    />
                   </label>
-                  <input
-                    {...register("email", { required: true })}
-                    type="text"
-                    onFocus={(e) => {
-                      e.target.placeholder = "";
-                    }}
-                    onBlur={(e) => {
-                      e.target.placeholder = "Enter your email";
-                    }}
-                    name="email"
-                    placeholder="Enter your email"
-                    className="w-full px-4 py-2 mt-2 text-base border border-gray-400 transition duration-300 ease-in-out transform rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent "
-                  />
                 </div>
                 <div className="relative mt-4">
                   <label
@@ -82,20 +76,20 @@ const Signup = () => {
                     className="text-sm  font-bold leading-7 text-gray-700"
                   >
                     What should we call you?
+                    <input
+                      {...register("username", { required: true })}
+                      type="text"
+                      onFocus={(e) => {
+                        e.target.placeholder = "";
+                      }}
+                      onBlur={(e) => {
+                        e.target.placeholder = "Enter a username";
+                      }}
+                      name="username"
+                      placeholder="Enter a username"
+                      className="w-full px-4 py-2 mt-2 text-base border border-gray-400 transition duration-300 ease-in-out transform rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-700"
+                    />
                   </label>
-                  <input
-                    {...register("username", { required: true })}
-                    type="text"
-                    onFocus={(e) => {
-                      e.target.placeholder = "";
-                    }}
-                    onBlur={(e) => {
-                      e.target.placeholder = "Enter a username";
-                    }}
-                    name="username"
-                    placeholder="Enter a username"
-                    className="w-full px-4 py-2 mt-2 text-base border border-gray-400 transition duration-300 ease-in-out transform rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-700"
-                  />
                 </div>
                 <div className="relative mt-4">
                   <label
@@ -103,20 +97,20 @@ const Signup = () => {
                     className="text-sm  font-bold leading-7 text-gray-700"
                   >
                     Create a password
+                    <input
+                      {...register("password", { required: true })}
+                      type="password"
+                      onFocus={(e) => {
+                        e.target.placeholder = "";
+                      }}
+                      onBlur={(e) => {
+                        e.target.placeholder = "Type a password";
+                      }}
+                      name="password"
+                      placeholder="Type a password"
+                      className="w-full px-4 py-2 mt-2 text-base border border-gray-400 transition duration-300 ease-in-out transform rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-700"
+                    />
                   </label>
-                  <input
-                    {...register("password", { required: true })}
-                    type="password"
-                    onFocus={(e) => {
-                      e.target.placeholder = "";
-                    }}
-                    onBlur={(e) => {
-                      e.target.placeholder = "Type a password";
-                    }}
-                    name="password"
-                    placeholder="Type a password"
-                    className="w-full px-4 py-2 mt-2 text-base border border-gray-400 transition duration-300 ease-in-out transform rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-700"
-                  />
                 </div>
 
                 <div className="font-tweb mt-4 ">
@@ -136,7 +130,7 @@ const Signup = () => {
                   </Link>
                 </div>
                 <p className="mx-auto mt-3 text-xs text-gray-500 font-tweb">
-                  By clicking on sign-up, you agree to Glasnik's Terms and
+                  By clicking on sign-up, you agree to Glasnik&apos;s Terms and
                   Conditions of Use.
                 </p>
               </div>

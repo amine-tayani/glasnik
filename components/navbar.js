@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-filename-extension */
 import Link from "next/link";
 import React from "react";
 

@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-filename-extension */
 import { useRouter } from "next/router";
 import React from "react";
 import RoomNav from "../../components/RoomNav";
