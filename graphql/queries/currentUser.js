@@ -6,7 +6,13 @@ const GET_CURRENT_USER = gql`
       username
       email
       id
-      isActive
+      photoUrl
+      friends {
+        username
+        email
+        id
+        photoUrl
+      }
     }
   }
 `;

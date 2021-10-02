@@ -21,7 +21,6 @@ const Login = () => {
     register,
     formState: { errors },
   } = useForm({ mode: "onBlur" });
-  console.log(errors);
   const [loginToAccount, { loading, error }] = useMutation(LOGIN_TO_ACCOUNT, {
     onCompleted({ loginToAccount }) {
       if (loginToAccount) {
@@ -61,7 +60,9 @@ const Login = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {loading ? (
-        <Spinner />
+        <div className="absolute right-1/2 bottom-1/2  transform translate-x-1/2 translate-y-1/2 ">
+          <Spinner />
+        </div>
       ) : (
         <section className="font-inter">
           <div className="container mx-auto items-center px-5 py-12 lg:px-20">

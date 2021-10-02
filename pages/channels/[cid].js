@@ -70,7 +70,7 @@ const channel = () => {
         </ul>
       </div>
       <div className="font-inter bg-[#2F3136] ">
-        <di v className="overflow-hidden flex mt-6 mx-4">
+        <div className="overflow-hidden flex mt-6 mx-4">
           <input
             onFocus={(e) => {
               e.target.placeholder = "";
@@ -88,16 +88,13 @@ const channel = () => {
           >
             <SearchIcon className="h-5 w-5 text-gray-400 " />
           </button>
-        </di>
+        </div>
         <div className="mx-4 mt-10">
           <AddFriendModal />
           <div className="flex flex-col space-y-2 transition duration-300 ease-in-out">
-            <UserAvatar username={user?.username} />
-            <UserAvatar username={user?.username} />
-            <UserAvatar username={user?.username} />
-            <UserAvatar username={user?.username} />
-            <UserAvatar username={user?.username} />
-            <UserAvatar username={user?.username} />
+            {user?.friends.map((friend) => (
+              <UserAvatar key={friend.id} infos={friend} />
+            ))}
           </div>
         </div>
       </div>

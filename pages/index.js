@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
-import Navbar from "../components/navbar";
+import Navbar from "../components/Navbar";
 import { useAuth } from "../utils/auth/check-auth";
 
 const Home = () => {
