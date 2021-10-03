@@ -7,7 +7,11 @@ import { ADD_FRIEND } from "../../graphql/mutations/friend";
 import Spinner from "../shared/Spinner";
 
 const AddFriendModal = () => {
-  const { handleSubmit, register } = useForm({ mode: "onSubmit" });
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm({ mode: "onSubmit" });
   const [addFriend, { loading, error }] = useMutation(ADD_FRIEND);
 
   const addFriendToList = async (data) => {
@@ -50,13 +54,17 @@ const AddFriendModal = () => {
                 <h1 className="text-white text-xl font-semibold mb-4">
                   Add a friend
                 </h1>
+
                 {loading ? (
                   <Spinner />
                 ) : (
                   <form onSubmit={handleSubmit(addFriendToList)}>
                     <div className="flex items-center space-x-2">
                       <input
-                        {...register("friendId")}
+                        {...register("friendId", {
+                          required:
+                            "*Friend ID is required. Please fill in field",
+                        })}
                         onFocus={(e) => {
                           e.target.placeholder = "";
                         }}
@@ -65,7 +73,9 @@ const AddFriendModal = () => {
                         }}
                         name="friendId"
                         type="text"
-                        className="bg-[#36393F] rounded-lg text-sm appearance-none w-4/5 px-4 py-3 leading-tight focus:outline-none text-gray-400"
+                        className={`bg-[#36393F] rounded-lg text-sm appearance-none w-4/5 px-4 py-3 leading-tight focus:outline-none text-gray-400 ${
+                          errors.friendId ? "ring-2 ring-red-600" : ""
+                        }`}
                         placeholder="Paste the id here..."
                       />
                       <button
@@ -76,6 +86,14 @@ const AddFriendModal = () => {
                       </button>
                     </div>
                   </form>
+                )}
+                {error && (
+                  <p className="text-xs text-red-500 mt-2">*{error.message}</p>
+                )}
+                {errors.friendId && (
+                  <p className="text-xs text-red-500 mt-2">
+                    {errors.friendId.message}
+                  </p>
                 )}
               </div>
             </Popover.Panel>
