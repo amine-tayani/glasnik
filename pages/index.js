@@ -18,7 +18,7 @@ const Home = () => {
         <div className="container flex flex-col items-center px-5 mx-auto md:flex-row lg:px-28">
           <div className="flex flex-col items-start w-full pt-0 mb-16 text-left lg:flex-grow md:w-1/2 xl:mr-20 md:pr-24 md:mb-0 ">
             <h1 className="mb-8 text-2xl text-gray-100 font-barlow tracking-wide font-extrabold md:text-7xl">
-              Glasnik chat for free
+              Glasnik Chat for free
             </h1>
             <p className="mb-8 text-xl  leading-relaxed text-left text-gray-200 font-medium">
               Glasnik gives you a different messaging experience. focusing on

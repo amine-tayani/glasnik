@@ -9,10 +9,17 @@ module.exports = {
         tweb: "Titillium Web",
         inter: "Inter",
         barlow: "Barlow",
+        roboto: "Roboto",
       },
       height: {
         100: "500px",
         "1p": "1px",
+      },
+      width: {
+        100: "400px",
+        200: "500px",
+        300: "600px",
+        400: "700px",
       },
       zIndex: {
         max: "2147483647 ",

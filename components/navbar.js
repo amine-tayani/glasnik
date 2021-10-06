@@ -13,7 +13,7 @@ const Navbar = ({ user, isAuthenticated }) => (
             </h2>
           </div>
         </a>
-        <nav className="hidden md:flex items-center justify-center md:ml-auto md:mr-auto font-inter">
+        <nav className="hidden md:flex items-center justify-center md:mx-auto font-inter">
           <ul className="items-center inline-block list-none lg:inline-flex ">
             <li>
               <a
@@ -72,7 +72,7 @@ const Navbar = ({ user, isAuthenticated }) => (
           <Link href={`/channels/${user?.username}`}>
             <button
               type="button"
-              className="w-auto px-8 mx-4 py-2 my-4 text-base text-gray-900  transform transition duration-500 ease-in-out border-none font-bold bg-gray-50 hover:bg-gray-200 rounded-full font-barlow focus:outline-none "
+              className="w-auto px-8 mx-8 py-2 my-4 text-base text-gray-900  transform transition duration-500 ease-in-out border-none font-bold bg-gray-50 hover:bg-gray-200 rounded-full font-barlow focus:outline-none "
             >
               Open Glasnik
             </button>
