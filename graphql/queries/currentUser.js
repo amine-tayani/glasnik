@@ -13,6 +13,12 @@ const GET_CURRENT_USER = gql`
         id
         photoUrl
       }
+      friendOf {
+        username
+        email
+        id
+        photoUrl
+      }
     }
   }
 `;

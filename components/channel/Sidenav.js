@@ -27,7 +27,7 @@ const Sidenav = () => (
         <a href="s">
           <div className="p-3 transform hover:scale-110 bg-[#36393F] flex justify-center items-center rounded-full">
             <img
-              src="https://bflat.cc/wp-content/uploads/2021/05/cropped-sliker-logo.png"
+              src="https://static-cdn.jtvnw.net/jtv_user_pictures/e4d9bf96-311d-487a-b5eb-9f9a94e0f795-profile_image-70x70.png"
               alt="sliker"
               className="w-8 h-8"
             />

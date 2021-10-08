@@ -3,8 +3,15 @@ import React, { useContext } from "react";
 import Cookie from "universal-cookie";
 import { Tab } from "@headlessui/react";
 import { AuthContext } from "../../context/userContext";
+import AccountPanel from "../panels/AccountPanel";
+import UserProfilePannel from "../panels/UserProfilePanel";
+import UserPrivacyPanel from "../panels/UserPrivacyPanel";
+import AppearancePanel from "../panels/AppearancePanel";
+import NotificationsPanel from "../panels/NotificationsPanel";
+import LanguagePanel from "../panels/LanguagePanel";
+import StatusPanel from "../panels/StatusPanel";
 
-const Sidebar = () => {
+const Sidebar = ({ data }) => {
   const settings = [
     { id: 1, name: "My account" },
     { id: 2, name: "User profile" },
@@ -26,8 +33,8 @@ const Sidebar = () => {
     router.push("/login");
   };
   return (
-    <div className="relative bg-[#2F3136] w-1/3 h-screen">
-      <div className=" absolute right-0 mx-10 mt-16 font-inter">
+    <div className=" bg-[#2F3136] w-1/3 h-screen">
+      <div className="ml-80 mt-16 font-inter">
         <div className=" text-gray-300 text-sm">
           <Tab.Group defaultIndex={0}>
             <Tab.List className="flex flex-col space-y-2">
@@ -45,6 +52,29 @@ const Sidebar = () => {
                 </Tab>
               ))}
             </Tab.List>
+            <Tab.Panels className="absolute top-0 right-0 mr-60 mt-10 w-400">
+              <Tab.Panel>
+                <AccountPanel user={data} />
+              </Tab.Panel>
+              <Tab.Panel>
+                <UserProfilePannel />
+              </Tab.Panel>
+              <Tab.Panel>
+                <UserPrivacyPanel />
+              </Tab.Panel>
+              <Tab.Panel>
+                <AppearancePanel />
+              </Tab.Panel>
+              <Tab.Panel>
+                <NotificationsPanel />
+              </Tab.Panel>
+              <Tab.Panel>
+                <LanguagePanel />
+              </Tab.Panel>
+              <Tab.Panel>
+                <StatusPanel />
+              </Tab.Panel>
+            </Tab.Panels>
           </Tab.Group>
         </div>
 

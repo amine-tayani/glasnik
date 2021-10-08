@@ -46,9 +46,13 @@ const channel = () => {
         <div className="mx-4 mt-10">
           <AddFriendModal />
           <div className="flex flex-col space-y-2 transition duration-300 ease-in-out">
-            {user?.friends.map((friend) => (
-              <UserAvatar key={friend.id} infos={friend} />
-            ))}
+            {user?.friends.length !== 0
+              ? user?.friends.map((friend) => (
+                  <UserAvatar key={friend.id} infos={friend} />
+                ))
+              : user?.friendOf.map((friend) => (
+                  <UserAvatar key={friend.id} infos={friend} />
+                ))}
           </div>
         </div>
         <IconTabs current={user} />
