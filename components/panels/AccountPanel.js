@@ -1,10 +1,10 @@
 import React from "react";
-import Card from "../user/Card";
+import AccountCard from "../user/AccountCard";
 
 const AccountPanel = ({ user }) => (
   <>
     <h1 className="text-xl text-white font-roboto font-semibold">My Account</h1>
-    <Card user={user} />
+    <AccountCard user={user} />
     <h1 className="text-xl text-white font-roboto font-semibold my-8">
       Password and Authentication
     </h1>
@@ -25,7 +25,7 @@ const AccountPanel = ({ user }) => (
 
       <button
         type="submit"
-        className=" px-4 py-2 rounded-lg text-sm transition duration-400 ease-in-out bg-red-500 hover:bg-red-600 text-white focus:outline-none "
+        className=" px-4 py-2 rounded-lg text-sm transition duration-400 ease-in-out text-gray-200 hover:text-white border-2 border-red-500 hover:bg-red-500  focus:outline-none "
       >
         Delete Account
       </button>

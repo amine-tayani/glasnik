@@ -1,7 +1,7 @@
 import React from "react";
 import { UserIcon } from "@heroicons/react/solid";
 
-const Card = ({ user }) => (
+const AccountCard = ({ user }) => (
   <div className="bg-[#2F3136] font-inter text-white p-6 mt-8 rounded-xl">
     <div className="flex justify-between items-center">
       <div className="flex space-x-4 items-center">
@@ -73,4 +73,4 @@ const Card = ({ user }) => (
   </div>
 );
 
-export default Card;
+export default AccountCard;

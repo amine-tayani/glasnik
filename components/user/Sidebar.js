@@ -2,6 +2,16 @@ import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import Cookie from "universal-cookie";
 import { Tab } from "@headlessui/react";
+import {
+  AdjustmentsIcon,
+  BellIcon,
+  LockClosedIcon,
+  LogoutIcon,
+  PuzzleIcon,
+  StatusOnlineIcon,
+  TranslateIcon,
+  UserIcon,
+} from "@heroicons/react/outline";
 import { AuthContext } from "../../context/userContext";
 import AccountPanel from "../panels/AccountPanel";
 import UserProfilePannel from "../panels/UserProfilePanel";
@@ -13,13 +23,41 @@ import StatusPanel from "../panels/StatusPanel";
 
 const Sidebar = ({ data }) => {
   const settings = [
-    { id: 1, name: "My account" },
-    { id: 2, name: "User profile" },
-    { id: 3, name: "User Privacy" },
-    { id: 4, name: "Appearance" },
-    { id: 5, name: "Notifications" },
-    { id: 6, name: "Language" },
-    { id: 7, name: "Status" },
+    {
+      id: 1,
+      name: "My account",
+      icon: <PuzzleIcon className="h-5 w-5 text-gray-400" />,
+    },
+    {
+      id: 2,
+      name: "User profile",
+      icon: <UserIcon className="h-5 w-5 text-gray-400" />,
+    },
+    {
+      id: 3,
+      name: "User Privacy",
+      icon: <LockClosedIcon className="h-5 w-5 text-gray-400" />,
+    },
+    {
+      id: 4,
+      name: "Appearance",
+      icon: <AdjustmentsIcon className="h-5 w-5 text-gray-400" />,
+    },
+    {
+      id: 5,
+      name: "Notifications",
+      icon: <BellIcon className="h-5 w-5 text-gray-400" />,
+    },
+    {
+      id: 6,
+      name: "Language",
+      icon: <TranslateIcon className="h-5 w-5 text-gray-400" />,
+    },
+    {
+      id: 7,
+      name: "Status",
+      icon: <StatusOnlineIcon className="h-5 w-5 text-gray-400" />,
+    },
   ];
   const { dispatch } = useContext(AuthContext);
   const cookies = new Cookie();
@@ -42,11 +80,12 @@ const Sidebar = ({ data }) => {
                 <Tab key={s.id} className="focus:outline-none text-left w-40">
                   {({ selected }) => (
                     <div
-                      className={`py-2 pl-4 hover:bg-[#393C43] hover:text-white cursor-pointer rounded-md ${
+                      className={`flex items-center space-x-2 py-2 pl-4 hover:bg-[#393C43] hover:text-white cursor-pointer rounded-md ${
                         selected ? "bg-[#3c3e46] text-white" : ""
                       }`}
                     >
-                      {s.name}
+                      <p>{s.icon}</p>
+                      <span>{s.name}</span>
                     </div>
                   )}
                 </Tab>
@@ -78,9 +117,14 @@ const Sidebar = ({ data }) => {
           </Tab.Group>
         </div>
 
-        <div className=" text-sm mt-8 text-red-500 pl-4 py-2 hover:bg-[#393C43] hover:text-red-500 transition-all ease-in-out duration-300 cursor-pointer rounded-lg">
-          <button className="focus:outline-none" onClick={logout}>
-            Sign Out
+        <div className="w-40 text-sm mt-8  pl-4 py-2 text-gray-300 hover:text-white hover:bg-[#393C43] transition-all ease-in-out duration-300 cursor-pointer rounded-lg">
+          <button
+            className="focus:outline-none flex items-center space-x-2"
+            onClick={logout}
+          >
+            <LogoutIcon className="h-5 w-6 text-gray-400" />
+
+            <span> Sign Out</span>
           </button>
         </div>
       </div>
