@@ -3,9 +3,11 @@ import AccountCard from "../user/AccountCard";
 
 const AccountPanel = ({ user }) => (
   <>
-    <h1 className="text-xl text-white font-roboto font-semibold">My Account</h1>
+    <h1 className="text-2xl text-white font-barlow tracking-wide font-semibold">
+      My Account
+    </h1>
     <AccountCard user={user} />
-    <h1 className="text-xl text-white font-roboto font-semibold my-8">
+    <h1 className="text-xl text-white font-barlow font-semibold tracking-wide mt-8 mb-4">
       Password and Authentication
     </h1>
     <div className="font-inter">
@@ -15,10 +17,10 @@ const AccountPanel = ({ user }) => (
       >
         Change Password
       </button>
-      <h1 className="text-xl text-white font-roboto font-semibold mt-8 mb-2">
+      <h1 className="text-xl text-white font-barlow font-semibold tracking-wide mt-8 mb-2">
         Account Deletion
       </h1>
-      <p className=" text-gray-300 text-xs mb-6">
+      <p className=" text-gray-300 text-xs mb-4">
         Deleting your account means it is gone forever and you cannot recover it
         again.
       </p>

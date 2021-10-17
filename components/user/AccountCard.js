@@ -1,26 +1,32 @@
 import React from "react";
 import { UserIcon } from "@heroicons/react/solid";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const AccountCard = ({ user }) => (
   <div className="bg-[#2F3136] font-inter text-white p-6 mt-8 rounded-xl">
     <div className="flex justify-between items-center">
       <div className="flex space-x-4 items-center">
-        <div className="relative flex-shrink-0">
-          <span className="absolute bottom-1 right-1 z-50 w-4 h-4 ring-0 ring-transparent ring-offset-8 ring-offset-[#2F3136] bg-green-600 rounded-full" />
-          <div className="avatar placeholder">
-            <div className="bg-[#393C43] text-neutral-content rounded-full w-20 h-20">
-              {user.photoUrl === null ? (
-                <UserIcon className="h-12 w-12" />
-              ) : (
-                <img
-                  className="w-20 h-20"
-                  src={user.photoUrl}
-                  alt={user.username}
-                />
-              )}
+        <CopyToClipboard text={user.id}>
+          <div
+            data-tip="Copy User ID"
+            className="cursor-pointer relative flex-shrink-0 tooltip tooltip-left"
+          >
+            <span className="absolute bottom-1 right-1 z-50 w-4 h-4 ring-0 ring-transparent ring-offset-8 ring-offset-[#2F3136] bg-green-600 rounded-full" />
+            <div className="avatar placeholder">
+              <div className="bg-[#393C43] text-neutral-content rounded-full w-20 h-20">
+                {user.photoUrl === null ? (
+                  <UserIcon className="h-12 w-12" />
+                ) : (
+                  <img
+                    className="w-20 h-20"
+                    src={user.photoUrl}
+                    alt={user.username}
+                  />
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        </CopyToClipboard>
         <div>
           <p className="text-xl text-gray-100 font-semibold mb-1">
             {user.username}
@@ -42,9 +48,7 @@ const AccountCard = ({ user }) => (
           <p className="text-gray-400 text-xs uppercase font-medium">
             username
           </p>
-          <p className="text-gray-200 text-sm">
-            {user.username} # {user.id}
-          </p>
+          <p className="text-gray-200 text-sm">{user.username}</p>
         </div>
         <div>
           <button

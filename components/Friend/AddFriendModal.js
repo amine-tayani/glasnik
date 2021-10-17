@@ -33,11 +33,11 @@ const AddFriendModal = () => {
     <>
       <div className="flex justify-between mb-2">
         <h1 className="text-gray-400 text-sm font-semibold font-sand uppercase">
-          Direct Messages
+          Your Friends
         </h1>
         <Popover className="relative">
           <Popover.Button className="outline-none focus:outline-none">
-            <div data-tip="Make DM" className="tooltip ">
+            <div data-tooltip="Add friend" data-flow="bottom">
               <PlusIcon className="h-5 w-5 text-gray-400 hover:text-gray-100 cursor-pointer" />
             </div>
           </Popover.Button>

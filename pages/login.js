@@ -34,7 +34,7 @@ const Login = () => {
           maxAge: 60 * 60 * 60 * 2.8,
         });
         if (!error) {
-          router.push(`/channels/${loginToAccount?.user.username}`);
+          router.push(`/channels/me`);
         }
       }
     },
