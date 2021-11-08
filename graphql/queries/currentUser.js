@@ -13,6 +13,11 @@ const GET_CURRENT_USER = gql`
         id
         photoUrl
       }
+      communities {
+        name
+        category
+        type
+      }
       friendOf {
         username
         email

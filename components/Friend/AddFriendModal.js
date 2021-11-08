@@ -37,7 +37,11 @@ const AddFriendModal = () => {
         </h1>
         <Popover className="relative">
           <Popover.Button className="outline-none focus:outline-none">
-            <div data-tooltip="Add friend" data-flow="bottom">
+            <div
+              data-tooltip="Add friend"
+              data-flow="bottom"
+              className=" text-sm font-semibold font-barlow"
+            >
               <PlusIcon className="h-5 w-5 text-gray-400 hover:text-gray-100 cursor-pointer" />
             </div>
           </Popover.Button>

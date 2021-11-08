@@ -1,60 +1,26 @@
-import {
-  ApolloClient,
-  InMemoryCache,
-  split,
-  createHttpLink,
-} from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
+import { ApolloClient, InMemoryCache, ApolloLink } from "@apollo/client";
+import { createUploadLink } from "apollo-upload-client";
 import Cookies from "universal-cookie";
-import { WebSocketLink } from "@apollo/client/link/ws";
-import { getMainDefinition } from "@apollo/client/utilities";
 
 const cookies = new Cookies();
 
-let httpLink = createHttpLink({
-  uri: "http://localhost:4000/",
-});
+const uploadLink = createUploadLink({ uri: "http://localhost:4000/graphql" });
 
-const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
+const authMiddleware = new ApolloLink((operation, forward) => {
+  // add the authorization to the headers
   const token = cookies.get("auth-token");
-  // return the headers to the context so httpLink can read them
-  return {
+
+  operation.setContext(({ headers = {} }) => ({
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : "",
     },
-  };
+  }));
+
+  return forward(operation);
 });
 
-httpLink = authLink.concat(httpLink);
-
-const wsLink = process.browser
-  ? new WebSocketLink({
-      uri: "ws://localhost:4000/graphql",
-      options: {
-        reconnect: true,
-        connectionParams: {
-          Authorization: `Bearer ${cookies.get("auth-token")}`,
-        },
-      },
-    })
-  : null;
-
-const splitLink = wsLink
-  ? split(
-      ({ query }) => {
-        const def = getMainDefinition(query);
-        return (
-          def.kind === "OperationDefinition" && def.operation === "subscription"
-        );
-      },
-      wsLink,
-      httpLink
-    )
-  : httpLink;
-
 export const GraphqlClient = new ApolloClient({
-  link: splitLink,
+  link: ApolloLink.from([authMiddleware, uploadLink]),
   cache: new InMemoryCache(),
 });

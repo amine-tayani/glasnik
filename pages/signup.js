@@ -48,10 +48,7 @@ const Signup = () => {
           <div className="container mx-auto items-center px-5 py-12 lg:px-20">
             <div className="flex flex-col w-full p-10 mx-auto my-6 transition duration-500 ease-in-out transform  rounded-lg lg:w-2/6 md:w-1/2 md:mt-0">
               <div className="flex justify-center items-center mb-4">
-                <div className="w-3 h-3 p-3 mr-2 rounded-full bg-gradient-to-tr  from-indigo-400 to-blue-700" />
-                <h2 className="block p-2 text-3xl font-tweb font-extrabold tracking-widest transition duration-500 ease-in-out transform cursor-pointer lg:mr-8 text-white">
-                  Glasnik
-                </h2>
+                <img src="/logo2.svg" className=" w-36 h-20" alt="" />
               </div>
               <form onSubmit={handleSubmit(signup)}>
                 {error && (

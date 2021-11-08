@@ -7,19 +7,19 @@ import AddFriendModal from "../../components/Friend/AddFriendModal";
 import Sidenav from "../../components/channel/Sidenav";
 import EmojiMenu from "../../components/channel/EmojiMenu";
 import FileModal from "../../components/channel/FileModal";
+import GifsMenu from "../../components/channel/GifsMenu";
 
 const channel = () => {
   const { user, isAuthenticated } = useAuth();
-
   return (
     <div className="flex bg-[#202225]">
       <Head>
         <title>
-          {isAuthenticated ? `${user?.username} channel` : "Glasnik "}
+          {isAuthenticated ? `${user?.username} - Glasnik` : "Glasnik "}
         </title>
       </Head>
       <Sidenav prop={user} />
-      <div className="font-inter w-1/6 bg-[#2F3136] relative">
+      <div className="font-inter w-1/6 bg-[#2F3136]">
         <div className="mx-4 mt-10">
           <AddFriendModal />
           <div className="flex flex-col space-y-2 transition duration-300 ease-in-out">
@@ -31,9 +31,6 @@ const channel = () => {
                   <UserAvatar key={friend.id} infos={friend} />
                 ))}
           </div>
-          {!user?.friend && (
-            <h1 className="text-gray-300 text-sm">You have no friends</h1>
-          )}
         </div>
       </div>
       <div className="bg-[#36393F] w-3/5 font-inter relative">
@@ -66,8 +63,9 @@ const channel = () => {
               placeholder="Send message here..."
             />
             <div className="flex space-x-2 items-center bg-[#24262b] pr-4">
-              <EmojiMenu />
               <FileModal />
+              <EmojiMenu />
+              <GifsMenu />
             </div>
           </div>
         </div>

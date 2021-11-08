@@ -20,7 +20,7 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Barlow"
             rel="stylesheet"
           />
-          <link rel="icon" href="/glasnik-icon.png" />
+          <link rel="icon" href="/logo1.svg" />
         </Head>
         <body>
           <Main />

@@ -9,7 +9,11 @@ import { RESET_PASSWORD } from "../../../graphql/mutations/auth";
 import Spinner from "../../../components/shared/Spinner";
 
 const ResetPwd = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ mode: "onBlur" });
   const [showMessage, setShowMessage] = useState(false);
 
   const cookies = new Cookies();
@@ -107,7 +111,15 @@ const ResetPwd = () => {
                       >
                         New Password
                         <input
-                          {...register("password", { required: true })}
+                          {...register("password", {
+                            required:
+                              "*Field is required. Please fill in field",
+                            minLength: {
+                              value: 8,
+                              message:
+                                "*Password must be at least 8 characters long.",
+                            },
+                          })}
                           type="password"
                           onFocus={(e) => {
                             e.target.placeholder = "";
@@ -117,9 +129,16 @@ const ResetPwd = () => {
                           }}
                           name="password"
                           placeholder="Enter your new password"
-                          className="w-full bg-[#272D36] px-4 py-2 mt-2 transition duration-300 ease-in-out transform rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0071FF] "
+                          className={`w-full bg-[#272D36] px-4 py-2 mt-2 transition duration-300 ease-in-out transform rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0071FF] ${
+                            errors.password ? "ring-2 ring-red-600" : ""
+                          } `}
                         />
                       </label>
+                      {errors.password && (
+                        <p className="text-red-600 text-sm my-2">
+                          {errors.password.message}
+                        </p>
+                      )}
                     </div>
                     <div className="relative  mt-4">
                       <label
@@ -128,7 +147,15 @@ const ResetPwd = () => {
                       >
                         Confirm Password
                         <input
-                          {...register("confirmPassword", { required: true })}
+                          {...register("confirmPassword", {
+                            required:
+                              "*Field is required. Please fill in field",
+                            minLength: {
+                              value: 8,
+                              message:
+                                "*Password must be at least 8 characters long.",
+                            },
+                          })}
                           type="password"
                           onFocus={(e) => {
                             e.target.placeholder = "";
@@ -138,9 +165,16 @@ const ResetPwd = () => {
                           }}
                           name="confirmPassword"
                           placeholder="Confirm your new password"
-                          className="w-full bg-[#272D36] px-4 py-2 mt-2 transition duration-300 ease-in-out transform rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0071FF]"
+                          className={`w-full bg-[#272D36] px-4 py-2 mt-2 transition duration-300 ease-in-out transform rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0071FF] ${
+                            errors.confirmPassword ? "ring-2 ring-red-600" : ""
+                          }`}
                         />
                       </label>
+                      {errors.confirmPassword && (
+                        <p className="text-red-600 text-sm my-2">
+                          {errors.confirmPassword.message}
+                        </p>
+                      )}
                     </div>
 
                     <div className=" mt-4 font-tweb">

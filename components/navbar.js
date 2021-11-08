@@ -7,10 +7,7 @@ const Navbar = ({ user, isAuthenticated }) => (
       <div className="flex flex-col flex-wrap p-2 md:items-center md:flex-row ">
         <a href="/" className="pr-2 lg:pr-8 lg:px-6 focus:outline-none">
           <div className="inline-flex items-center">
-            <div className="w-3 h-3 p-3 mr-2 rounded-full bg-gradient-to-tr  from-indigo-400 to-blue-700" />
-            <h2 className="block p-2 text-xl font-tweb font-extrabold tracking-widest transition duration-500 ease-in-out transform cursor-pointer lg:text-3xl lg:mr-8">
-              Glasnik
-            </h2>
+            <img src="/Logo2.svg" className="w-24" alt="" />
           </div>
         </a>
         <nav className="hidden md:flex items-center justify-center md:mx-auto font-inter">
