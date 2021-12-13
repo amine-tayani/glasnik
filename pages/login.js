@@ -9,6 +9,7 @@ import { LOGIN_TO_ACCOUNT } from "../graphql/mutations/auth";
 import Spinner from "../components/shared/Spinner";
 import { AuthContext } from "../context/userContext";
 import { validation } from "../utils/auth/validate-login";
+import ErrorAlert from "../components/ErrorAlert";
 
 const Login = () => {
   const cookies = new Cookies();
@@ -69,9 +70,7 @@ const Login = () => {
                 <img src="/logo2.svg" className=" w-36 h-20" alt="" />
               </div>
               <form onSubmit={handleSubmit(login)}>
-                {error && (
-                  <p className="text-sm mb-4 text-red-400">*{error.message}</p>
-                )}
+                {error && <ErrorAlert message={error.message} />}
                 <div className="relative ">
                   <label
                     htmlFor="email"

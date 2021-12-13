@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import React from "react";
 import { CREATE_ACCOUNT } from "../graphql/mutations/auth";
 import Spinner from "../components/shared/Spinner";
+import ErrorAlert from "../components/ErrorAlert";
 
 const Signup = () => {
   const { handleSubmit, register } = useForm();
@@ -51,11 +52,7 @@ const Signup = () => {
                 <img src="/logo2.svg" className=" w-36 h-20" alt="" />
               </div>
               <form onSubmit={handleSubmit(signup)}>
-                {error && (
-                  <p className="text-sm mb-4 font-tweb text-red-500">
-                    *{error.message}
-                  </p>
-                )}
+                {error && <ErrorAlert message={error.message} />}
                 <div>
                   <div className="relative ">
                     <label

@@ -1,23 +1,27 @@
-import { useMutation } from "@apollo/client";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { UPLOAD_AVATAR } from "../../graphql/mutations/file";
-import GET_CURRENT_USER from "../../graphql/queries/currentUser";
+import PictureCropModal from "./PictureCrop";
 
 const AccountCard = ({ user }) => {
-  const [uploadAvatar, { error }] = useMutation(UPLOAD_AVATAR, {
-    onCompleted: (data) => console.log(data),
-    refetchQueries: [{ query: GET_CURRENT_USER, pollInterval: 200 }],
-  });
+  const [openDialog, setIsOpen] = useState(false);
+  const [imgSrc, setImgSrc] = useState(null);
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    uploadAvatar({ variables: { avatar: file } });
-  };
-
-  if (error) {
-    console.log(error?.networkError?.result);
+  function readFile(file) {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => resolve(reader.result), false);
+      reader.readAsDataURL(file);
+    });
   }
+
+  const handleFileChange = async (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      const imageDataUrl = await readFile(file);
+      setImgSrc(imageDataUrl);
+      setIsOpen(true);
+    }
+  };
 
   const fileRef = useRef(null);
 
@@ -33,13 +37,13 @@ const AccountCard = ({ user }) => {
             <div
               data-tooltip="Copy user id"
               data-flow="left"
-              className="cursor-pointer relative flex-shrink-0 text-sm font-barlow font-medium"
+              className="cursor-pointer text-sm font-semibold font-barlow relative flex-shrink-0 "
             >
               <span className="absolute bottom-1 right-1 z-50 w-4 h-4 ring-0 ring-transparent ring-offset-8 ring-offset-[#2F3136] bg-green-600 rounded-full" />
               <div className="avatar placeholder">
                 <div className="bg-[#393C43] text-neutral-content rounded-full p-3 w-20 h-20">
                   <img
-                    className="rounded-full"
+                    className="rounded-full object-cover"
                     src={
                       user.photoUrl
                         ? user.photoUrl
@@ -68,10 +72,17 @@ const AccountCard = ({ user }) => {
           <button
             onClick={openFileUploadBox}
             type="submit"
-            className=" px-4 py-2 rounded-lg text-sm transition duration-400 ease-in-out bg-blue-600 hover:bg-blue-700 text-white focus:outline-none "
+            className="flex space-x-2 justify-center px-4 py-2 rounded-lg text-sm transition duration-400 ease-in-out bg-blue-600 hover:bg-blue-700 text-white focus:outline-none "
           >
-            Edit User Profile
+            Change Picture
           </button>
+          {openDialog && (
+            <PictureCropModal
+              image={imgSrc}
+              open={openDialog}
+              setOpen={setIsOpen}
+            />
+          )}
         </div>
       </div>
       <div className="bg-[#36393F] p-6 mt-4 rounded-xl">

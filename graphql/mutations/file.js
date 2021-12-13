@@ -1,9 +1,11 @@
 import { gql } from "@apollo/client";
 
-export const UPLOAD_AVATAR = gql`
+const UPLOAD_AVATAR = gql`
   mutation uploadAvatar($avatar: Upload) {
     uploadAvatar(avatar: $avatar) {
       message
     }
   }
 `;
+
+export default UPLOAD_AVATAR;

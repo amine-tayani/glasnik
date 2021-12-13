@@ -1,9 +1,18 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+const colors = require("tailwindcss/colors");
+
 module.exports = {
   mode: "jit",
   purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      colors: {
+        fuschia: colors.fuchsia,
+        blueGray: colors.blueGray,
+        amber: colors.amber,
+        purple: colors.emerald,
+      },
       fontFamily: {
         sand: "quicksand",
         tweb: "Titillium Web",

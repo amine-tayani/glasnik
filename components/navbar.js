@@ -1,7 +1,8 @@
 import React from "react";
 import Link from "next/link";
+import Loader from "./shared/Loader";
 
-const Navbar = ({ user, isAuthenticated }) => (
+const Navbar = ({ user, isAuthenticated, loading }) => (
   <div className=" container items-center max-w-full">
     <div className="text-gray-100 font-sand  bg-gray-900 ">
       <div className="flex flex-col flex-wrap p-2 md:items-center md:flex-row ">
@@ -71,7 +72,14 @@ const Navbar = ({ user, isAuthenticated }) => (
               type="button"
               className="w-auto px-8 mx-8 py-2 my-4 text-base text-gray-900  transform transition duration-500 ease-in-out border-none font-bold bg-gray-50 hover:bg-gray-200 rounded-full font-barlow focus:outline-none "
             >
-              Open Glasnik
+              {loading ? (
+                <div className="flex items-center space-x-2 justify-center">
+                  <Loader color="text-gray-900" />
+                  <span>loading</span>
+                </div>
+              ) : (
+                "Open Glasnik"
+              )}
             </button>
           </Link>
         )}

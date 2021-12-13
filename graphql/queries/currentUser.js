@@ -8,17 +8,21 @@ const GET_CURRENT_USER = gql`
       id
       photoUrl
       friends {
+        id
         username
         email
         id
         photoUrl
       }
       communities {
+        id
         name
         category
         type
+        thumbUrl
       }
       friendOf {
+        id
         username
         email
         id

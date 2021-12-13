@@ -1,39 +1,106 @@
-import React, { Fragment, useCallback, useRef } from "react";
+/* eslint-disable no-nested-ternary */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import React, { Fragment, useCallback, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { XIcon, CameraIcon } from "@heroicons/react/outline";
+import { XIcon, CameraIcon, ChevronLeftIcon } from "@heroicons/react/outline";
 import { useMutation } from "@apollo/client";
-import { useForm } from "react-hook-form";
+import { useForm, useController } from "react-hook-form";
 import SwitchAccess from "./Switch";
-import { CREATE_COMMUNITY } from "../../graphql/mutations/community";
+import {
+  CREATE_COMMUNITY,
+  JOIN_COMMUNITY,
+} from "../../graphql/mutations/community";
 import Spinner from "../shared/Spinner";
+import GET_CURRENT_USER from "../../graphql/queries/currentUser";
 
 const CreateChannelDialog = ({ open, setOpen }) => {
+  const [isPrivate, changePrivacy] = useState(false);
+  const [showJoinCommunityDialog, setCommunityDialog] = useState(false);
+  const showJoinCommunity = useCallback(() => {
+    setCommunityDialog(true);
+  }, []);
   const {
     handleSubmit,
     register,
+    control,
     formState: { errors },
   } = useForm({ mode: "onBlur" });
 
-  const [createCommunity, { loading, error }] = useMutation(CREATE_COMMUNITY);
+  const [createCommunity, { error, loading }] = useMutation(CREATE_COMMUNITY, {
+    onCompleted: (data) => console.log(data),
+    refetchQueries: [{ query: GET_CURRENT_USER, pollInterval: 200 }],
+  });
 
+  const [joinCommunity] = useMutation(JOIN_COMMUNITY, {
+    onCompleted: (data) => console.log(data),
+    refetchQueries: [{ query: GET_CURRENT_USER, pollInterval: 200 }],
+  });
   const avatarRef = useRef(null);
+
   const openAvatarUploadBox = useCallback(() => {
     avatarRef.current.click();
   }, []);
 
+  const FileInput = ({ control, name }) => {
+    const { field } = useController({ control, name });
+    return (
+      <>
+        <input
+          hidden
+          onChange={(e) => {
+            field.onChange(e.target.files[0]);
+          }}
+          type="file"
+          ref={avatarRef}
+          accept="image/*"
+        />
+        <a
+          data-tooltip="Upload avatar"
+          data-flow="bottom"
+          onClick={openAvatarUploadBox}
+          className="focus:outline-none flex justify-center items-center cursor-pointer h-12 w-12 p-3 rounded-r-lg group bg-[#36393F] hover:bg-[#4a494d] text-gray-400 "
+        >
+          <CameraIcon className="h-8 w-8 text-gray-400 group-hover:text-white " />
+        </a>
+      </>
+    );
+  };
+
   const createNewCommunity = async (data) => {
+    console.log(data);
     try {
       await createCommunity({
         variables: {
+          type: isPrivate ? "PRIVATE" : "PUBLIC",
           name: data.name,
           category: data.category,
+          thumbUrl: data.file,
         },
       });
       setOpen(false);
-    } catch (error) {
-      console.log(error.message);
+    } catch (e) {
+      console.log(e.message);
     }
   };
+
+  const joinAnExistingCommunity = async (data) => {
+    console.log(data);
+    try {
+      await joinCommunity({
+        variables: {
+          name: data.cname,
+        },
+      });
+      setOpen(false);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+  if (error) {
+    console.log(error.networkError?.result);
+  }
 
   return (
     <Transition appear show={open} as={Fragment}>
@@ -55,7 +122,6 @@ const CreateChannelDialog = ({ open, setOpen }) => {
             <Dialog.Overlay className="fixed inset-0 opc" />
           </Transition.Child>
           <Transition.Child
-            as={Fragment}
             enter="ease-out duration-300"
             enterFrom="opacity-0 scale-95"
             enterTo="opacity-100 scale-100"
@@ -78,7 +144,9 @@ const CreateChannelDialog = ({ open, setOpen }) => {
                     as="h3"
                     className="mt-2 mx-4 text-xl font-bold leading-6 text-gray-50"
                   >
-                    Create a Server
+                    {showJoinCommunityDialog
+                      ? "Join a Server"
+                      : "Create a Server "}
                   </Dialog.Title>
                   <div className="mt-4 mx-4 -mb-4">
                     {error && (
@@ -87,92 +155,131 @@ const CreateChannelDialog = ({ open, setOpen }) => {
                       </p>
                     )}
                   </div>
-                  <div className="flex ml-2 mt-14 justify-center">
-                    <input
-                      {...register("name", {
-                        required: "*Field is required. Please fill in field",
-                        minLength: {
-                          value: 5,
-                          message:
-                            "*Server name must be at least 5 characters long.",
-                        },
-                      })}
-                      onFocus={(e) => {
-                        e.target.placeholder = "";
-                      }}
-                      onBlur={(e) => {
-                        e.target.placeholder = "Type the name of the server";
-                      }}
-                      name="name"
-                      type="text"
-                      className="bg-[#36393F] rounded-l-lg text-sm appearance-none w-96 px-4 py-3 leading-tight focus:outline-none text-gray-300 placeholder-gray-400 "
-                      placeholder="Type the name of the server"
-                    />
-                    <div>
-                      <input
-                        hidden
-                        name="avatar"
-                        type="file"
-                        ref={avatarRef}
-                        accept="image/*"
-                      />
+                  {!showJoinCommunityDialog ? (
+                    <>
+                      <div className="flex ml-2 mt-14 justify-center">
+                        <input
+                          {...register("name", {
+                            required:
+                              "*Field is required. Please fill in field",
+                            minLength: {
+                              value: 5,
+                              message:
+                                "*Server name must be at least 5 characters long.",
+                            },
+                          })}
+                          onFocus={(e) => {
+                            e.target.placeholder = "";
+                          }}
+                          onBlur={(e) => {
+                            e.target.placeholder =
+                              "Type the name of the server";
+                          }}
+                          name="name"
+                          type="text"
+                          className="bg-[#36393F] rounded-l-lg text-sm appearance-none w-96 px-4 py-3 leading-tight focus:outline-none text-gray-300 placeholder-gray-400 "
+                          placeholder="Type the name of the server"
+                        />
+                        <div>
+                          <FileInput name="file" control={control} />
+                        </div>
+                      </div>
+                      {errors.name && (
+                        <p className="text-red-500 text-xs mx-4 my-2">
+                          {errors.name.message}
+                        </p>
+                      )}
+                      <div className="flex justify-center pl-2 mt-6">
+                        <input
+                          {...register("category", {
+                            required:
+                              "*Field is required. Please fill in field",
+                          })}
+                          onFocus={(e) => {
+                            e.target.placeholder = "";
+                          }}
+                          onBlur={(e) => {
+                            e.target.placeholder = "Write the category ";
+                          }}
+                          name="category"
+                          type="text"
+                          className="bg-[#36393F] rounded-lg text-sm appearance-none w-[430px] px-4 py-[14px] leading-tight focus:outline-none text-gray-300 placeholder-gray-400"
+                          placeholder="Write the category"
+                        />
+                      </div>
+                      {errors.category && (
+                        <p className="text-red-500 text-xs mx-4 my-2">
+                          {errors.category.message}
+                        </p>
+                      )}
+                      <div className="flex justify-between -mt-8 mx-4 items-center">
+                        <div className="flex items-center space-x-4">
+                          <SwitchAccess
+                            isprivate={isPrivate}
+                            setPrivate={changePrivacy}
+                          />
+                          <span className="text-sm text-gray-300 font-medium">
+                            Private
+                          </span>
+                        </div>
+                        <button
+                          type="submit"
+                          className="w-1/5 py-2 rounded-lg text-sm transform transition duration-500 ease-in-out bg-[#0071FF] text-gray-100 font-medium focus:outline-none "
+                        >
+                          Create
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <form onSubmit={handleSubmit(joinAnExistingCommunity)}>
+                      <div className="flex justify-center my-12">
+                        <input
+                          {...register("cname", {
+                            required:
+                              "*Field is required. Please fill in field",
+                          })}
+                          onFocus={(e) => {
+                            e.target.placeholder = "";
+                          }}
+                          onBlur={(e) => {
+                            e.target.placeholder = "Write the category ";
+                          }}
+                          name="cname"
+                          type="text"
+                          className="bg-[#36393F] rounded-lg text-sm appearance-none w-[430px] px-4 py-[14px] leading-tight focus:outline-none text-gray-300 placeholder-gray-400"
+                          placeholder="Write name of the community to join"
+                        />
+                      </div>
+                    </form>
+                  )}
+                  {showJoinCommunityDialog ? (
+                    <div className="flex justify-between -mt-8 mx-4 ">
                       <button
-                        data-tooltip="Upload avatar"
-                        data-flow="bottom"
-                        onClick={openAvatarUploadBox}
-                        className="focus:outline-none flex justify-center items-center cursor-pointer h-12 w-12 p-3 rounded-r-lg group bg-[#36393F] hover:bg-[#4a494d] text-gray-400 "
+                        type="button"
+                        onClick={() => setCommunityDialog(false)}
+                        className="flex absolute focus:outline-none right-0 mx-8 justify-center items-center cursor-pointer h-10 w-10 p-3 rounded-xl group bg-[#25272b] hover:bg-[#4a494d]"
                       >
-                        <CameraIcon className="h-8 w-8 text-gray-400 group-hover:text-white " />
+                        <ChevronLeftIcon className="h-5 w-5 text-gray-400 group-hover:text-white" />
+                      </button>
+
+                      <button
+                        type="submit"
+                        className="w-1/5 py-2 rounded-lg text-sm transform transition duration-500 ease-in-out bg-[#0071FF] text-gray-100 font-medium focus:outline-none "
+                      >
+                        Join
                       </button>
                     </div>
-                  </div>
-                  {errors.name && (
-                    <p className="text-red-500 text-xs mx-4 my-2">
-                      {errors.name.message}
-                    </p>
+                  ) : (
+                    <div className="-mt-8 flex justify-center">
+                      <button
+                        type="button"
+                        onClick={showJoinCommunity}
+                        className="w-full mx-4 py-2 rounded-lg text-sm transform transition duration-500 ease-in-out bg-[#36393F] text-gray-300 hover:bg-[#373738] hover:text-white font-medium focus:outline-none "
+                      >
+                        Join a Community
+                      </button>
+                    </div>
                   )}
-                  <div className="flex justify-center pl-2 mt-6">
-                    <input
-                      {...register("category", {
-                        required: "*Field is required. Please fill in field",
-                      })}
-                      onFocus={(e) => {
-                        e.target.placeholder = "";
-                      }}
-                      onBlur={(e) => {
-                        e.target.placeholder = "Write the category ";
-                      }}
-                      name="category"
-                      type="text"
-                      className="bg-[#36393F] rounded-lg text-sm appearance-none w-[430px] px-4 py-[14px] leading-tight focus:outline-none text-gray-300 placeholder-gray-400"
-                      placeholder="Write the category"
-                    />
-                  </div>
-                  {errors.category && (
-                    <p className="text-red-500 text-xs mx-4 my-2">
-                      {errors.category.message}
-                    </p>
-                  )}
-                  <div className="flex space-x-2 -mt-8 mx-4 items-center">
-                    <SwitchAccess />
-                    <span className="text-sm text-gray-300 font-medium">
-                      Private
-                    </span>
-                  </div>
-                  <div className="space-x-2 -mt-12 flex justify-end">
-                    <button
-                      onClick={() => setOpen(false)}
-                      className="w-1/5 py-2 rounded-lg text-sm transform transition duration-500 ease-in-out bg-[#25272b] text-gray-300 hover:bg-[#4a494d] hover:text-white font-medium focus:outline-none "
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="w-1/5 py-2 rounded-lg text-sm transform transition duration-500 ease-in-out bg-[#0071FF] text-gray-100 font-medium focus:outline-none "
-                    >
-                      Create
-                    </button>
-                  </div>
                 </div>
               </form>
             )}

@@ -10,7 +10,7 @@ import {
 } from "@heroicons/react/outline";
 import CreateChannelDialog from "./CreateChannelDialog";
 
-const Sidenav = ({ prop }) => {
+const Sidenav = ({ prop, bg }) => {
   const [openDialog, setIsOpen] = useState(false);
   const [mute, setMute] = useState(false);
   const [play] = useSound("/sounds/muteMic.mp3", { volume: 0.4 });
@@ -19,11 +19,16 @@ const Sidenav = ({ prop }) => {
     setTimeout(() => {
       setMute(!mute);
       play();
-    }, 1000);
+    }, 500);
   };
+
   return (
     <div className="">
-      <ul className="menu w-24 py-3 h-screen bg-[#202225] border-r border-[#293030] text-white">
+      <ul
+        className={` menu w-24 py-3 h-screen ${
+          bg || "bg-[#202225]  border-r border-[#293030]"
+        } text-white`}
+      >
         <li>
           <a href="#f">
             <div className="p-3 text-sm font-semibold font-barlow transform bg-[#36393F] flex justify-center items-center rounded-xl hover:rounded-3xl transition-all duration-300 ease-linear cursor-pointer">
@@ -31,10 +36,25 @@ const Sidenav = ({ prop }) => {
             </div>
           </a>
         </li>
-
+        {prop?.communities.map((community) => (
+          <li>
+            <a
+              className="text-sm font-semibold font-barlow text-gray-400"
+              href={`/channels/${community.id}`}
+              data-tooltip={community.name}
+              data-flow="bottom"
+            >
+              <div className="avatar object-center">
+                <div className="w-14 h-14 mask mask-hexagon">
+                  <img src={community.thumbUrl} alt="channel" />
+                </div>
+              </div>
+            </a>
+          </li>
+        ))}
         <li>
           <a
-            href
+            href="#open"
             onClick={() => {
               setIsOpen(true);
             }}
@@ -48,7 +68,7 @@ const Sidenav = ({ prop }) => {
           </a>
         </li>
         <li>
-          <a href>
+          <a href="/channels/explore">
             <div
               data-tooltip="Explore"
               data-flow="bottom"
@@ -58,8 +78,8 @@ const Sidenav = ({ prop }) => {
             </div>
           </a>
         </li>
-        <li className="absolute bottom-0 mb-4">
-          <div className="flex flex-col text-gray-400 space-y-4 my-4 ml-8">
+        <li className="absolute bottom-0 z-max bg-[#202225] h-">
+          <div className="flex flex-col text-gray-400 space-y-4 mt-4 ml-8">
             <span
               className=" text-sm font-semibold font-barlow"
               data-tooltip="Mute Mic"
@@ -79,14 +99,14 @@ const Sidenav = ({ prop }) => {
                 <VolumeOffIcon className="w-6 h-6 text-red-500" />
               )}
             </button>
-            <Link href={`/profile/${prop?.username}`}>
+            <Link href="/profile">
               <div
                 data-tooltip="Profile"
                 data-flow="right"
-                className="text-sm font-semibold font-barlow cursor-pointer -ml-3 p-2 transform bg-[#36393F] flex justify-center items-center rounded-xl hover:rounded-3xl transition-all duration-300 ease-linear"
+                className="text-sm font-semibold font-barlow cursor-pointer -ml-2 h-12 w-12 transform transition-all duration-300 ease-linear"
               >
                 <img
-                  className="h-8 w-8"
+                  className="h-10 w-10 rounded-full object-cover"
                   alt="avatar"
                   src={
                     prop?.photoUrl

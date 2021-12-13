@@ -1,10 +1,19 @@
 import { gql } from "@apollo/client";
 
 export const CREATE_COMMUNITY = gql`
-  mutation createCommunity($name: String!, $category: String!) {
-    createCommunity(name: $name, category: $category) {
-      name
-      category
+  mutation createCommunity(
+    $name: String!
+    $category: String!
+    $type: CommunityType
+    $thumbUrl: Upload
+  ) {
+    createCommunity(
+      name: $name
+      category: $category
+      type: $type
+      thumbUrl: $thumbUrl
+    ) {
+      id
     }
   }
 `;
