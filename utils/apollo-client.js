@@ -8,7 +8,9 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const token = cookies.get("auth-token");
 
-const httpLink = createUploadLink({ uri: "http://localhost:4000/graphql" });
+const httpLink = createUploadLink({
+  uri: "http://localhost:4000/graphql",
+});
 
 const authLink = setContext((_, { headers }) => ({
   headers: {
@@ -24,6 +26,7 @@ const wsLink = process.browser
         connectionParams: {
           Authorization: token ? `Bearer ${token}` : "",
         },
+        lazy: true,
         reconnect: true,
       },
     })
@@ -44,6 +47,7 @@ const link = process.browser
   : httpLink;
 
 export const GraphqlClient = new ApolloClient({
+  ssrMode: typeof window === "undefined",
   link,
   cache: new InMemoryCache(),
 });

@@ -1,5 +1,5 @@
 import React from "react";
-import { PlusIcon } from "@heroicons/react/outline";
+import { PlusCircleIcon } from "@heroicons/react/solid";
 import { Popover, Transition } from "@headlessui/react";
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
@@ -32,7 +32,7 @@ const AddFriendModal = () => {
   return (
     <>
       <div className="flex justify-between mb-2">
-        <h1 className="text-gray-400 text-sm font-semibold font-sand uppercase">
+        <h1 className="text-gray-400 text-sm font-semibold uppercase">
           Your Friends
         </h1>
         <Popover className="relative">
@@ -42,7 +42,7 @@ const AddFriendModal = () => {
               data-flow="bottom"
               className=" text-sm font-semibold font-barlow"
             >
-              <PlusIcon className="h-5 w-5 text-gray-400 hover:text-gray-100 cursor-pointer" />
+              <PlusCircleIcon className="h-6 w-6 text-gray-400 hover:text-gray-100 cursor-pointer" />
             </div>
           </Popover.Button>
           <Transition

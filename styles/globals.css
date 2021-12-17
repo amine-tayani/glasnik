@@ -2,13 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Inter&family=Titillium+Web&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Barlow&family=Inter&family=Quicksand&family=Titillium+Web&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap");
 @layer utilities {
   .slider {
     @apply appearance-none bg-gray-500 w-72 h-[3px] rounded-xl focus:outline-none opacity-70 transition-opacity duration-200 ease-in-out;
   }
-
+  .hero-text {
+    line-height: 75px;
+    font-size: 60px;
+  }
   .slider:hover {
     opacity: 1;
   }
@@ -16,6 +19,7 @@
   .slider::-webkit-slider-thumb {
     @apply appearance-none w-4 h-4 rounded-full bg-blue-600 cursor-pointer;
   }
+
   .App {
     @apply absolute inset-0 w-full;
   }
@@ -143,11 +147,11 @@
   [data-tooltip=""]::before {
     display: none !important;
   }
-  #emojis::-webkit-scrollbar {
+  #scrollBar::-webkit-scrollbar {
     width: 6px;
     @apply bg-transparent;
   }
-  #emojis::-webkit-scrollbar-thumb {
+  #scrollBar::-webkit-scrollbar-thumb {
     @apply bg-[#44474e] rounded-xl;
   }
   .loader,

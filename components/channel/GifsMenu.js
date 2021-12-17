@@ -30,7 +30,7 @@ const GifsMenu = () => {
       >
         <Popover.Panel className=" font-inter fixed right-96 bottom-24">
           <div
-            id="emojis"
+            id="scrollBar"
             className="w-400 h-100 overflow-y-scroll overflow-x-hidden bg-[#2F3136] pl-8 pr-12 shadow-xl rounded-lg "
           >
             <div className="sticky top-0 z-50 bg-[#2F3136] w-screen py-4 ">
@@ -38,7 +38,11 @@ const GifsMenu = () => {
             </div>
             <div className={` grid grid-cols-3 gap-2 mb-4`}>
               {gifs.map((gif) => (
-                <img alt={gif.title} src={gif.images.fixed_height.url} />
+                <img
+                  key={gif.id}
+                  alt={gif.title}
+                  src={gif.images.fixed_height.url}
+                />
               ))}
             </div>
           </div>

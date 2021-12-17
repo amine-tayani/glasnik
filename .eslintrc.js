@@ -20,5 +20,6 @@ module.exports = {
     "no-shadow": "off",
     "import/prefer-default-export": "off",
     "react/button-has-type": "off",
+    "eslint-disable arrow-body-style": "on",
   },
 };

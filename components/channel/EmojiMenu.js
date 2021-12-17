@@ -30,7 +30,7 @@ const EmojiMenu = () => {
       >
         <Popover.Panel className=" font-inter fixed right-16 bottom-24">
           <div
-            id="emojis"
+            id="scrollBar"
             className="w-3/5 h-100 overflow-y-scroll overflow-x-hidden bg-[#2F3136] pl-8 pr-12 shadow-xl rounded-lg "
           >
             <div className="sticky top-0 z-50 bg-[#2F3136] w-200 py-4 ">
