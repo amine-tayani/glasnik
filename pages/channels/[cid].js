@@ -68,7 +68,7 @@ const channel = () => {
       console.log(e.message);
     }
   };
-
+  // subscription to community messages
   useEffect(() => {
     subscribeToMore({
       document: ON_NEW_MESSAGE,
