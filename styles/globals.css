@@ -5,6 +5,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Barlow&family=Inter&family=Quicksand&family=Titillium+Web&family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap");
 @layer utilities {
+  .menu li > a:focus,
+  .menu li > a:hover {
+    background-color: transparent;
+  }
+
   .slider {
     @apply appearance-none bg-gray-500 w-72 h-[3px] rounded-xl focus:outline-none opacity-70 transition-opacity duration-200 ease-in-out;
   }

@@ -48,14 +48,17 @@ const channel = () => {
   const { handleSubmit, register } = useForm({ mode: "onBlur" });
 
   const { loading, data } = useQuery(GET_SINGLE_COMMUNITY, {
+    fetchPolicy: "cache",
     variables: { communityId: cid },
   });
 
   const {
+    loading: pending,
     subscribeToMore,
     data: msgData,
     error,
   } = useQuery(GET_COMMUNITY_MESSAGES, {
+    fetchPolicy: "cache",
     variables: { communityId: cid },
   });
 
@@ -182,6 +185,7 @@ const channel = () => {
           >
             {msgData?.getMessages.map((message) => (
               <ChatLayout
+                loading={pending}
                 message={message}
                 currentUser={user}
                 key={message.id}
@@ -231,7 +235,7 @@ const channel = () => {
           </div>
         </div>
       )}
-      <MembersPane cid={cid} data={data} user={user} />
+      <MembersPane cid={cid} data={data} user={user} loading={loading} />
     </div>
   );
 };

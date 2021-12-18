@@ -1,16 +1,44 @@
 /* eslint-disable arrow-body-style */
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { DateToNoun, toHourMinuteFmt } from "../../utils/dateUtil";
 
-const ChatLayout = ({ message, currentUser }) => {
-  return (
-    <div className="mx-4 p-4 flex space-x-4 ">
+const ChatLayout = ({ message, currentUser, loading }) => {
+  const messagesRef = useRef(null);
+
+  const scrollTolatest = () => {
+    if (messagesRef.current) {
+      messagesRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "start",
+      });
+    }
+  };
+
+  useEffect(() => {
+    scrollTolatest();
+  }, [messagesRef]);
+
+  return loading ? (
+    <div className="animate-pulse flex space-x-4 mx-4 p-4">
+      <div className="rounded-full bg-gray-500 h-10 w-10" />
+      <div className="flex-1 space-y-6 py-1">
+        <div className="space-y-3">
+          <div className="grid gap-4 w-1/2">
+            <div className="h-3 bg-gray-500 rounded-full " />
+            <div className="h-3 bg-gray-500 rounded-full " />
+          </div>
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div ref={messagesRef} className="mx-4 p-4 flex space-x-4 ">
       <img
         className="h-10 w-10 object-cover rounded-full"
         src={
-          message.sender.photoUrl
-            ? message.sender.photoUrl
-            : "https://avatars.dicebear.com/api/bottts/149.svg"
+          message.sender?.photoUrl
+            ? message.sender?.photoUrl
+            : `https://avatars.dicebear.com/api/identicon/{${message.sender?.id}}.svg`
         }
         alt=""
       />

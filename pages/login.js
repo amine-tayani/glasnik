@@ -53,7 +53,7 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-[#1D232A] h-screen">
+    <div className="bg-[#111827] h-screen">
       <Head>
         <title>Glasnik - Login to your account</title>
         <link rel="icon" href="/favicon.ico" />

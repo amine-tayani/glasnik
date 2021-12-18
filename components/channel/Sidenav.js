@@ -6,14 +6,14 @@ const Sidenav = ({ prop, bg }) => {
   const [openDialog, setIsOpen] = useState(false);
 
   return (
-    <div className="">
+    <div>
       <ul
         className={` menu w-24 py-3 h-screen ${
           bg || "bg-[#202225]  border-r border-[#293030]"
         } text-white`}
       >
         <li>
-          <a href="#f">
+          <a href="/channels/me">
             <div className="p-3 text-sm font-semibold font-barlow transform bg-[#36393F] flex justify-center items-center rounded-xl hover:rounded-3xl transition-all duration-300 ease-linear cursor-pointer">
               <img src="/logo1.svg" className="w-7 h-7" alt="home" />
             </div>

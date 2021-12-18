@@ -4,12 +4,9 @@ import { useQuery } from "@apollo/client";
 import { SearchIcon } from "@heroicons/react/outline";
 import { BadgeCheckIcon } from "@heroicons/react/solid";
 import { GET_ALL_PUBLIC_COMMUNITIES } from "../../graphql/queries/community";
-import Loader from "../../components/shared/Loader";
 
 const Explore = () => {
-  const { data, loading } = useQuery(GET_ALL_PUBLIC_COMMUNITIES, {
-    pollInterval: 100,
-  });
+  const { data, loading } = useQuery(GET_ALL_PUBLIC_COMMUNITIES);
 
   return (
     <div className="flex bg-[#1D232A] overflow-x-hidden h-screen">
@@ -17,7 +14,7 @@ const Explore = () => {
         <title>Glasnik - Explore public Communities</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="bg-[#1D232A] w-full mt-12 font-inter text-white relative">
+      <div className="bg-[#111827] w-full mt-12 font-inter text-white relative">
         <div className="background mx-20 shadow-md rounded-lg text-center p-4 sm:p-8 ">
           <h3 className="text-4xl font-bold mb-2 mt-10 ">
             Find Your community on glasnik
@@ -44,10 +41,19 @@ const Explore = () => {
           </div>
         </div>
         <div className="grid grid-cols-4 gap-4 justify-center mx-40 mt-12">
-          {loading ? (
-            <Loader />
-          ) : (
-            data?.communities.map((community) => (
+          {data?.communities.map((community) =>
+            loading ? (
+              <div className="bg-gray-500 animate-pulse  h-52 rounded-lg max-w-[300px] ">
+                <div className="p-6 flex flex-col space-y-8">
+                  <div className="flex items-center space-x-4">
+                    <div className="rounded-full bg-gray-400 h-10 w-10" />
+                    <div className="h-4 bg-gray-400 rounded-full w-1/2" />
+                  </div>
+                  <div className="h-4 bg-gray-400 rounded-full" />
+                  <div className="h-4 bg-gray-400 rounded-full " />
+                </div>
+              </div>
+            ) : (
               <div className="bg-[#27272c] shadow-md h-80  rounded-lg max-w-[300px] relative">
                 <div className="h-36">
                   <img
@@ -80,7 +86,7 @@ const Explore = () => {
                   </div>
                 </div>
               </div>
-            ))
+            )
           )}
         </div>
       </div>

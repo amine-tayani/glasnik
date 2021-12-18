@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import Link from "next/link";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 
-const Navbar = () => {
+const Navbar = ({ authenticated }) => {
   const [show, setShow] = useState(false);
 
   return (
@@ -49,14 +50,26 @@ const Navbar = () => {
             </ul>
           </div>
         </div>
-        <div className="space-x-4 hidden xl:flex mr-12">
-          <button className="focus:outline-none transition duration-150 ease-in-out bg-[#1a56db] lg:text-lg rounded-lg text-white px-6 py-2 text-sm hover:bg-blue-600">
-            Sign In
-          </button>
-          <button className="focus:outline-none transition duration-150 ease-in-out bg-white lg:text-lg rounded-lg text-gray-900 px-4 sm:px-6 py-2 text-sm ">
-            Sign Up
-          </button>
-        </div>
+        {!authenticated ? (
+          <div className="space-x-4 hidden xl:flex mr-12">
+            <Link href="/login">
+              <button className="focus:outline-none transition duration-150 ease-in-out bg-[#1a56db] lg:text-lg rounded-lg text-white px-6 py-2 text-sm hover:bg-blue-600">
+                Sign In
+              </button>
+            </Link>
+            <Link href="/signup">
+              <button className="focus:outline-none transition duration-150 ease-in-out bg-white lg:text-lg rounded-lg text-gray-900 px-4 sm:px-6 py-2 text-sm ">
+                Sign Up
+              </button>
+            </Link>
+          </div>
+        ) : (
+          <Link href="/channels/me">
+            <button className="focus:outline-none transition duration-150 ease-in-out bg-[#1a56db] lg:text-lg rounded-lg text-white px-6 py-2 text-sm hover:bg-blue-600">
+              My channel
+            </button>
+          </Link>
+        )}
       </div>
     </nav>
   );
