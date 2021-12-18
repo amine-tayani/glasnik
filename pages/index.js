@@ -1,14 +1,10 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable no-nested-ternary */
 import Head from "next/head";
-import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import Navbar from "../components/Navbar";
-import { useAuth } from "../utils/auth/check-auth";
-import Loader from "../components/shared/Loader";
 
 const Home = () => {
-  const { isAuthenticated, user, loading } = useAuth();
-
   return (
     <div>
       <Head>

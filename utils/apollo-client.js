@@ -8,9 +8,7 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const token = cookies.get("auth-token");
 
-const httpLink = createUploadLink({
-  uri: "http://localhost:4000/graphql",
-});
+const httpLink = createUploadLink({ uri: "http://localhost:4000/graphql" });
 
 const authLink = setContext((_, { headers }) => ({
   headers: {
@@ -26,7 +24,6 @@ const wsLink = process.browser
         connectionParams: {
           Authorization: token ? `Bearer ${token}` : "",
         },
-        lazy: true,
         reconnect: true,
       },
     })

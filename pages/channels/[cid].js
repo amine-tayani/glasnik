@@ -6,6 +6,15 @@ import { useRouter } from "next/router";
 import { useMutation, useQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import useSound from "use-sound";
+import {
+  BellIcon,
+  InboxIcon,
+  UserGroupIcon,
+  HashtagIcon,
+  VolumeUpIcon,
+  VolumeOffIcon,
+  MicrophoneIcon,
+} from "@heroicons/react/solid";
 import UserAvatar from "../../components/shared/UserAvatar";
 import AddFriendModal from "../../components/Friend/AddFriendModal";
 import Sidenav from "../../components/channel/Sidenav";
@@ -20,15 +29,6 @@ import { ON_NEW_MESSAGE } from "../../graphql/subscriptions/onMessage";
 import { useAuth } from "../../utils/auth/check-auth";
 import ChatLayout from "../../components/channel/ChatLayout";
 import MembersPane from "../../components/channel/MembersPane";
-import {
-  BellIcon,
-  InboxIcon,
-  UserGroupIcon,
-  HashtagIcon,
-  VolumeUpIcon,
-  VolumeOffIcon,
-  MicrophoneIcon,
-} from "@heroicons/react/solid";
 
 const channel = () => {
   const [mute, setMute] = useState(false);
@@ -73,13 +73,13 @@ const channel = () => {
     subscribeToMore({
       document: ON_NEW_MESSAGE,
       onError: (err) => console.log(err),
-      updateQuery: (prev, { subscriptionData }) => {
+      updateQuery: (oldMessages, { subscriptionData }) => {
         if (!subscriptionData.data) {
-          return prev;
+          return oldMessages;
         }
         const newMessage = subscriptionData.data.onMessage;
         return {
-          getChats: [...prev.getChats, newMessage],
+          getMessages: [...oldMessages.getMessages, newMessage],
         };
       },
     });

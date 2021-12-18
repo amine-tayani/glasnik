@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import CreateChannelDialog from "./CreateChannelDialog";
 import { FireIcon, PlusCircleIcon } from "@heroicons/react/solid";
+import CreateChannelDialog from "./CreateChannelDialog";
 
 const Sidenav = ({ prop, bg }) => {
   const [openDialog, setIsOpen] = useState(false);
@@ -37,6 +37,7 @@ const Sidenav = ({ prop, bg }) => {
         ))}
         <li>
           <a
+            href="#open"
             onClick={() => {
               setIsOpen(true);
             }}

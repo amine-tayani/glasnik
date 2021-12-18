@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import Link from "next/link";
-import Loader from "./shared/Loader";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 
-const Navbar = ({ user, isAuthenticated, loading }) => {
+const Navbar = () => {
   const [show, setShow] = useState(false);
 
   return (
@@ -31,7 +29,7 @@ const Navbar = ({ user, isAuthenticated, loading }) => {
           >
             <button
               onClick={() => setShow(!show)}
-              className={`block md:hidden lg:hidden text-gray-500 hover:text-gray-700 focus:text-gray-700 fixed focus:outline-none z-30 top-6 right-6 mt-6`}
+              className="block md:hidden lg:hidden text-gray-500 hover:text-gray-700 focus:text-gray-700 fixed focus:outline-none z-30 top-6 right-6 mt-6"
             >
               <XIcon className="lg:hidden h-7 w-7" />
             </button>

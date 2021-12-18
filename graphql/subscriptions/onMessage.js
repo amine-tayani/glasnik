@@ -1,16 +1,14 @@
 import { gql } from "@apollo/client";
 
 export const ON_NEW_MESSAGE = gql`
-  {
-    subscription {
-      onMessage {
+  subscription {
+    onMessage {
+      id
+      text
+      timestamp
+      sender {
         id
-        text
-        timestamp
-        sender {
-          id
-          username
-        }
+        username
       }
     }
   }

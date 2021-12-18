@@ -1,5 +1,6 @@
+/* eslint-disable arrow-body-style */
 import React from "react";
-import { DateToNoun, tfnow, toHourMinuteFmt } from "../../utils/dateUtil";
+import { DateToNoun, toHourMinuteFmt } from "../../utils/dateUtil";
 
 const ChatLayout = ({ message, currentUser }) => {
   return (
