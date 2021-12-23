@@ -6,6 +6,7 @@ const cookie = new Cookies();
 
 export const useAuth = () => {
   const { data, loading } = useQuery(GET_CURRENT_USER, {
+    pollInterval: 200,
     fetchPolicy: "cache-and-network",
   });
   const token = cookie.get("auth-token");

@@ -12,10 +12,8 @@ const Home = () => {
     <div>
       <Head>
         <title>Glasnik - Online Messaging application</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="bg-gray-100 pb-12 overflow-y-hidden">
-        {/* Code block starts */}
         <Navbar user={user} authenticated={isAuthenticated} loading={loading} />
         <div className="bg-[#111827] h-screen">
           <div className="container mx-auto flex flex-col items-center py-20 sm:py-24 font-inter">

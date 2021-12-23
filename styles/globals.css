@@ -4,6 +4,7 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Barlow&family=Inter&family=Quicksand&family=Titillium+Web&family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap");
 @layer utilities {
   .menu li > a:focus,
   .menu li > a:hover {
@@ -67,7 +68,6 @@
   [data-tooltip]:before {
     content: "";
     border: 5px solid transparent;
-    z-index: 100;
   }
   [data-tooltip]:after {
     content: attr(data-tooltip);
@@ -81,7 +81,6 @@
     border-radius: 25px;
     background: #393c43;
     color: #dddddd;
-    z-index: 99;
   }
   [data-tooltip]:hover:before,
   [data-tooltip]:hover:after {

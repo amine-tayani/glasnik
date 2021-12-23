@@ -3,8 +3,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Fragment, useCallback, useRef, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { XIcon, CameraIcon, ChevronLeftIcon } from "@heroicons/react/outline";
+import { Dialog, Transition, Tab } from "@headlessui/react";
+import { XIcon, CameraIcon } from "@heroicons/react/outline";
 import { useMutation } from "@apollo/client";
 import { useForm, useController } from "react-hook-form";
 import SwitchAccess from "./Switch";
@@ -12,23 +12,17 @@ import {
   CREATE_COMMUNITY,
   JOIN_COMMUNITY,
 } from "../../graphql/mutations/community";
-import Spinner from "../shared/Spinner";
 import GET_CURRENT_USER from "../../graphql/queries/currentUser";
 
 const CreateChannelDialog = ({ open, setOpen }) => {
   const [isPrivate, changePrivacy] = useState(false);
-  const [showJoinCommunityDialog, setCommunityDialog] = useState(false);
-  const showJoinCommunity = useCallback(() => {
-    setCommunityDialog(true);
-  }, []);
-  const {
-    handleSubmit,
-    register,
-    control,
-    formState: { errors },
-  } = useForm({ mode: "onBlur" });
 
-  const [createCommunity, { error, loading }] = useMutation(CREATE_COMMUNITY, {
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
+  const { handleSubmit, register, control } = useForm({ mode: "onBlur" });
+
+  const [createCommunity, { error }] = useMutation(CREATE_COMMUNITY, {
     onCompleted: (data) => console.log(data),
     refetchQueries: [{ query: GET_CURRENT_USER, pollInterval: 200 }],
   });
@@ -129,34 +123,43 @@ const CreateChannelDialog = ({ open, setOpen }) => {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            {loading ? (
-              <Spinner />
-            ) : (
-              <form onSubmit={handleSubmit(createNewCommunity)}>
-                <div className="relative bg-[#202227] rounded-xl w-200 h-1/4 mx-auto p-6 ">
-                  <button
-                    onClick={() => setOpen(false)}
-                    className="absolute focus:outline-none right-0 flex mx-8 justify-center items-center cursor-pointer h-10 w-10 p-3 rounded-xl group bg-[#25272b] hover:bg-[#4a494d] "
+            <div className="relative bg-[#202227] rounded-xl w-200 h-1/3 mx-auto px-4 py-2 ">
+              <button
+                onClick={() => setOpen(false)}
+                className="absolute focus:outline-none right-0 top-6 flex mx-8 justify-center items-center cursor-pointer h-10 w-10 p-3 rounded-xl group bg-[#25272b] hover:bg-[#4a494d] "
+              >
+                <XIcon className="h-8 w-8 text-gray-400 group-hover:text-white " />
+              </button>
+              <Tab.Group>
+                <Tab.List className="m-4 flex justify-center w-1/2 text-sm transform transition duration-500 ease-in-out bg-[#36393F] hover:bg-[#373738] hover:text-white font-medium focus:outline-none rounded-full">
+                  <Tab
+                    className={({ selected }) =>
+                      classNames(
+                        "w-full py-2.5 text-[13px] leading-5 font-medium text-gray-100 rounded-full focus:outline-none ",
+                        selected
+                          ? "bg-white text-gray-700 shadow transition duration-300 ease-in-out"
+                          : "text-gray-100 hover:bg-white/[0.12] hover:text-white"
+                      )
+                    }
                   >
-                    <XIcon className="h-8 w-8 text-gray-400 group-hover:text-white " />
-                  </button>
-                  <Dialog.Title
-                    as="h3"
-                    className="mt-2 mx-4 text-xl font-bold leading-6 text-gray-50"
+                    Create Server
+                  </Tab>
+                  <Tab
+                    className={({ selected }) =>
+                      classNames(
+                        "w-full py-2.5 text-[13px] leading-5 font-medium text-gray-100 rounded-full focus:outline-none",
+                        selected
+                          ? "bg-white shadow text-gray-700 transition duration-300 ease-in-out"
+                          : "text-gray-100 hover:bg-white/[0.12] hover:text-white"
+                      )
+                    }
                   >
-                    {showJoinCommunityDialog
-                      ? "Join a Server"
-                      : "Create a Server "}
-                  </Dialog.Title>
-                  <div className="mt-4 mx-4 -mb-4">
-                    {error && (
-                      <p className="text-sm font-tweb text-red-500">
-                        *{error.message}
-                      </p>
-                    )}
-                  </div>
-                  {!showJoinCommunityDialog ? (
-                    <>
+                    Join Server
+                  </Tab>
+                </Tab.List>
+                <Tab.Panels>
+                  <Tab.Panel>
+                    <form onSubmit={handleSubmit(createNewCommunity)}>
                       <div className="flex ml-2 mt-14 justify-center">
                         <input
                           {...register("name", {
@@ -184,11 +187,7 @@ const CreateChannelDialog = ({ open, setOpen }) => {
                           <FileInput name="file" control={control} />
                         </div>
                       </div>
-                      {errors.name && (
-                        <p className="text-red-500 text-xs mx-4 my-2">
-                          {errors.name.message}
-                        </p>
-                      )}
+
                       <div className="flex justify-center pl-2 mt-6">
                         <input
                           {...register("category", {
@@ -207,11 +206,7 @@ const CreateChannelDialog = ({ open, setOpen }) => {
                           placeholder="Write the category"
                         />
                       </div>
-                      {errors.category && (
-                        <p className="text-red-500 text-xs mx-4 my-2">
-                          {errors.category.message}
-                        </p>
-                      )}
+
                       <div className="flex justify-between -mt-8 mx-4 items-center">
                         <div className="flex items-center space-x-4">
                           <SwitchAccess
@@ -229,10 +224,11 @@ const CreateChannelDialog = ({ open, setOpen }) => {
                           Create
                         </button>
                       </div>
-                    </>
-                  ) : (
+                    </form>
+                  </Tab.Panel>
+                  <Tab.Panel>
                     <form onSubmit={handleSubmit(joinAnExistingCommunity)}>
-                      <div className="flex justify-center my-12">
+                      <div className="flex justify-center my-8">
                         <input
                           {...register("cname", {
                             required:
@@ -242,7 +238,8 @@ const CreateChannelDialog = ({ open, setOpen }) => {
                             e.target.placeholder = "";
                           }}
                           onBlur={(e) => {
-                            e.target.placeholder = "Write the category ";
+                            e.target.placeholder =
+                              "Write name of the community to join";
                           }}
                           name="cname"
                           type="text"
@@ -250,39 +247,17 @@ const CreateChannelDialog = ({ open, setOpen }) => {
                           placeholder="Write name of the community to join"
                         />
                       </div>
-                    </form>
-                  )}
-                  {showJoinCommunityDialog ? (
-                    <div className="flex justify-between -mt-8 mx-4 ">
-                      <button
-                        type="button"
-                        onClick={() => setCommunityDialog(false)}
-                        className="flex absolute focus:outline-none right-0 mx-8 justify-center items-center cursor-pointer h-10 w-10 p-3 rounded-xl group bg-[#25272b] hover:bg-[#4a494d]"
-                      >
-                        <ChevronLeftIcon className="h-5 w-5 text-gray-400 group-hover:text-white" />
-                      </button>
-
                       <button
                         type="submit"
-                        className="w-1/5 py-2 rounded-lg text-sm transform transition duration-500 ease-in-out bg-[#0071FF] text-gray-100 font-medium focus:outline-none "
+                        className="mb-4 mx-4 w-1/5 py-2 rounded-lg text-sm transform transition duration-500 ease-in-out bg-[#0071FF] text-gray-100 font-medium focus:outline-none "
                       >
-                        Join
+                        join
                       </button>
-                    </div>
-                  ) : (
-                    <div className="-mt-8 flex justify-center">
-                      <button
-                        type="button"
-                        onClick={showJoinCommunity}
-                        className="w-full mx-4 py-2 rounded-lg text-sm transform transition duration-500 ease-in-out bg-[#36393F] text-gray-300 hover:bg-[#373738] hover:text-white font-medium focus:outline-none "
-                      >
-                        Join a Community
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </form>
-            )}
+                    </form>
+                  </Tab.Panel>
+                </Tab.Panels>
+              </Tab.Group>
+            </div>
           </Transition.Child>
         </div>
       </Dialog>

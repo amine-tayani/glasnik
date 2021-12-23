@@ -15,7 +15,6 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Inter"
             rel="stylesheet"
           />
-
           <link
             href="https://fonts.googleapis.com/css2?family=Barlow"
             rel="stylesheet"

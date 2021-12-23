@@ -33,18 +33,20 @@ const ChatLayout = ({ message, currentUser, loading }) => {
     </div>
   ) : (
     <div ref={messagesRef} className="mx-4 p-4 flex space-x-4 ">
-      <img
-        className="h-10 w-10 object-cover rounded-full"
-        src={
-          message.sender?.photoUrl
-            ? message.sender?.photoUrl
-            : `https://avatars.dicebear.com/api/identicon/{${message.sender?.id}}.svg`
-        }
-        alt=""
-      />
+      <div className="bg-[#2F3136] h-12 w-12 rounded-full flex items-center justify-center">
+        <img
+          className="h-6 w-6 object-cover"
+          src={
+            message.sender?.photoUrl
+              ? message.sender?.photoUrl
+              : `https://avatars.dicebear.com/api/identicon/{${message.sender?.id}}.svg`
+          }
+          alt=""
+        />
+      </div>
       <div className="flex flex-col space-y-2">
         <div className="flex items-center space-x-2">
-          <p className="text-blue-200 font-medium ">
+          <p className="text-gray-100 font-medium text-[15px]">
             {message.sender.username === currentUser?.username
               ? "me"
               : message.sender.username}
@@ -54,7 +56,7 @@ const ChatLayout = ({ message, currentUser, loading }) => {
             {toHourMinuteFmt(message.timestamp)}
           </span>
         </div>
-        <p className="text-gray-300 text-sm">{message.text}</p>
+        <p className="text-gray-300 text-[13px]">{message.text}</p>
       </div>
     </div>
   );

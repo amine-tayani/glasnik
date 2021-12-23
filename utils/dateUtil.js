@@ -23,3 +23,8 @@ export const DateToNoun = (_date) => {
 export const toHourMinuteFmt = (dt) => {
   return moment(dt).format("h:mm a");
 };
+
+// eslint-disable-next-line arrow-body-style
+export const mntFormat = (dt) => {
+  return moment(dt).format("MMM D [at] h:mm A");
+};

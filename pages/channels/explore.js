@@ -2,24 +2,24 @@ import React from "react";
 import Head from "next/head";
 import { useQuery } from "@apollo/client";
 import { SearchIcon } from "@heroicons/react/outline";
-import { BadgeCheckIcon } from "@heroicons/react/solid";
+import { BadgeCheckIcon, UserGroupIcon } from "@heroicons/react/solid";
 import { GET_ALL_PUBLIC_COMMUNITIES } from "../../graphql/queries/community";
+import { mntFormat } from "../../utils/dateUtil";
 
 const Explore = () => {
   const { data, loading } = useQuery(GET_ALL_PUBLIC_COMMUNITIES);
 
   return (
-    <div className="flex bg-[#1D232A] overflow-x-hidden h-screen">
+    <div className="flex bg-[#111827] overflow-x-hidden h-screen">
       <Head>
         <title>Glasnik - Explore public Communities</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="bg-[#111827] w-full mt-12 font-inter text-white relative">
+      <div className=" w-full mt-12 font-inter text-white relative">
         <div className="background mx-20 shadow-md rounded-lg text-center p-4 sm:p-8 ">
-          <h3 className="text-4xl font-bold mb-2 mt-10 ">
-            Find Your community on glasnik
+          <h3 className="font-black hero-text mb-2 mt-10 ">
+            Find Your Community On Glasnik
           </h3>
-          <p className="text-lg text-gray-200 mb-6 ">
+          <p className="text-lg text-gray-100 mb-6 ">
             from gaming, to programming, to music, to learning, there&apos;s a
             place for you.
           </p>
@@ -40,7 +40,10 @@ const Explore = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-4 justify-center mx-40 mt-12">
+        <div className="mx-40 my-12">
+          <h1 className="text-xl font-semibold text-gray-100">Discover All</h1>
+        </div>
+        <div className="grid grid-cols-4 gap-4 justify-center mx-40 mt-12 ">
           {data?.communities.map((community) =>
             loading ? (
               <div className="bg-gray-500 animate-pulse  h-52 rounded-lg max-w-[300px] ">
@@ -54,7 +57,7 @@ const Explore = () => {
                 </div>
               </div>
             ) : (
-              <div className="bg-[#27272c] shadow-md h-80  rounded-lg max-w-[300px] relative">
+              <div className="bg-[#27272c] shadow-2xl h-64  rounded-lg max-w-[300px] relative cursor-pointer transform hover:translate-x-2 hover:translate-y-2 transition duration-200 ease-in-out">
                 <div className="h-36">
                   <img
                     alt={community.id}
@@ -67,22 +70,25 @@ const Explore = () => {
                     </div>
                   </div>
                 </div>
-                <div className="p-5">
-                  <div className="flex items-center space-x-1 my-2">
-                    <BadgeCheckIcon className="h-5 w-5 text-green-400" />
-                    <h5 className="text-gray-200 font-bold">
-                      {community.name}
-                    </h5>
+                <div className="p-6">
+                  <div className="flex justify-between">
+                    <div className="flex items-center space-x-1 my-2">
+                      <BadgeCheckIcon className="h-5 w-5 text-blue-500" />
+                      <h5 className="text-gray-200 text-sm font-medium">
+                        {community.name}
+                      </h5>
+                    </div>
                   </div>
-                  <p className="font-normal text-[13px] text-gray-400 mb-6">
-                    Here are the biggest enterprise technology acquisitions of
-                    2021 so far, in reverse chronological order.
-                  </p>
-                  <div className="flex items-center space-x-1 ">
-                    <div className="h-2 w-2 rounded-full bg-[#3BA55D]" />
-                    <p className="text-[12px] text-gray-400 ">
-                      {community.users.length} online
+                  <div className="flex justify-between items-center">
+                    <p className=" text-[11px] text-gray-400 uppercase mt-2 mb-5">
+                      created At {mntFormat(community.createdAt)}
                     </p>
+                    <div className="flex space-x-1 -mt-4">
+                      <UserGroupIcon className="w-4 h-4 text-gray-400" />
+                      <p className="text-[12px] text-gray-400 ">
+                        {community.users.length}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
