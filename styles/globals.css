@@ -225,4 +225,15 @@
       transform: rotate(360deg);
     }
   }
+  .box {
+    display: inline-block;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  .img-preview {
+    overflow: hidden;
+  }
+  .ReactCrop_crop-selection {
+    border-image-source: none;
+  }
 }

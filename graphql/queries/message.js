@@ -9,6 +9,7 @@ export const GET_COMMUNITY_MESSAGES = gql`
       sender {
         id
         username
+        photoUrl
       }
     }
   }

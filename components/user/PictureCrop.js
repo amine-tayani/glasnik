@@ -1,33 +1,33 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { Fragment, useCallback, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import Cropper from "react-easy-crop";
-import { ZoomInIcon, ZoomOutIcon } from "@heroicons/react/outline";
 import { useMutation } from "@apollo/client";
-import getCroppedImg from "../../utils/getCroppedImage";
 import UPLOAD_AVATAR from "../../graphql/mutations/file";
-import Loader from "../shared/Loader";
+import ImageCropper from "../../utils/imageCropper";
 
 const PictureCropModal = ({ open, setOpen, image }) => {
-  const [{ loading }] = useMutation(UPLOAD_AVATAR);
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [uploadAvatar, { data, loading, error }] = useMutation(UPLOAD_AVATAR);
+  const [croppedImage, setCroppedImage] = useState(undefined);
 
-  const onCropComplete = useCallback((croppedAreaPixels) => {
-    setCroppedAreaPixels(croppedAreaPixels);
-  }, []);
-
-  const uploadImage = useCallback(async () => {
-    const img = await getCroppedImg(image, croppedAreaPixels);
-    console.log(img);
-    setOpen(false);
-  }, [croppedAreaPixels]);
-
+  const onClickUpload = () => {
+    if (croppedImage) {
+      uploadAvatar({
+        variables: {
+          avatar: croppedImage,
+        },
+      });
+    }
+  };
+  if (error) {
+    console.log(error.networkError?.result);
+  }
+  if (data) {
+    console.log(data);
+  }
   return (
     <Transition appear show={open} as={Fragment}>
       <Dialog
-        className="fixed z-max text-white bg-[#36393F] w-300 h-100 left-[450px] top-32 right-0 font-inter overflow-y-auto overflow-x-hidden rounded-xl"
+        className="fixed z-max text-white bg-[#36393F] w-300 h-[450px] left-[450px] top-32 right-0 font-inter overflow-y-auto overflow-x-hidden rounded-xl"
         open={open}
         onClose={() => setOpen(false)}
       >
@@ -55,53 +55,22 @@ const PictureCropModal = ({ open, setOpen, image }) => {
             <div className="App">
               <div className="crop-container">
                 <div className="py-4 w-full bg-[#36393F] relative z-max">
-                  <h1 className="text-white text-center text-lg font-semibold">
+                  <h1 className="text-white text-center text-lg font-medium">
                     Update Profile Picture
                   </h1>
                 </div>
-                <Cropper
-                  image={image}
-                  crop={crop}
-                  zoom={zoom}
-                  aspect={1}
-                  cropShape="round"
-                  showGrid={false}
-                  onCropChange={setCrop}
-                  onZoomChange={setZoom}
-                  onCropComplete={onCropComplete}
+                <ImageCropper
+                  imageToCrop={image}
+                  onImageCropped={(croppedImage) =>
+                    setCroppedImage(croppedImage)
+                  }
                 />
-              </div>
-
-              <div className="controls">
-                <div className="flex space-x-4 ml-8 items-center">
-                  <ZoomOutIcon className="h-6 w-6 text-gray-300" />
-                  <input
-                    className="mx-8 slider w-full"
-                    type="range"
-                    value={zoom}
-                    min={1}
-                    max={3}
-                    step={0.1}
-                    onChange={(e) => setZoom(e.target.value)}
-                  />
-                  <ZoomInIcon className="h-6 w-6 text-gray-300" />
-                </div>
-                <div className="flex space-x-2 mr-6">
+                <div className="controls">
                   <button
-                    onClick={() => {
-                      setOpen(false);
-                    }}
-                    type="submit"
-                    className=" px-4 py-[6px] rounded-lg text-sm transition duration-400 ease-in-out bg-gray-600 hover:bg-gray-500 text-white focus:outline-none"
+                    onClick={onClickUpload}
+                    className="mx-4 py-2 px-6 bg-blue-600 text-white rounded-xl font-medium font-inter"
                   >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={uploadImage}
-                    type="submit"
-                    className=" px-4 py-[6px] rounded-lg text-sm transition duration-400 ease-in-out bg-blue-600 hover:bg-blue-700 text-white focus:outline-none "
-                  >
-                    {loading ? <Loader /> : "Save"}
+                    {loading ? "loading..." : "Save"}
                   </button>
                 </div>
               </div>

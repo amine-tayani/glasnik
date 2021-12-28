@@ -1,6 +1,6 @@
 import React from "react";
 
-const UserProfilePannel = () => (
+const UserProfilePanel = () => (
   <>
     <div className="font-inter">
       <h1 className="text-xl text-white font-roboto font-semibold">
@@ -27,4 +27,4 @@ const UserProfilePannel = () => (
   </>
 );
 
-export default UserProfilePannel;
+export default UserProfilePanel;

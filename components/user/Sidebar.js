@@ -14,7 +14,7 @@ import {
 } from "@heroicons/react/outline";
 import { AuthContext } from "../../context/userContext";
 import AccountPanel from "../panels/AccountPanel";
-import UserProfilePannel from "../panels/UserProfilePanel";
+import UserProfilePanel from "../panels/UserProfilePanel";
 import UserPrivacyPanel from "../panels/UserPrivacyPanel";
 import AppearancePanel from "../panels/AppearancePanel";
 import NotificationsPanel from "../panels/NotificationsPanel";
@@ -96,7 +96,7 @@ const Sidebar = ({ data }) => {
                 <AccountPanel user={data} />
               </Tab.Panel>
               <Tab.Panel>
-                <UserProfilePannel />
+                <UserProfilePanel />
               </Tab.Panel>
               <Tab.Panel>
                 <UserPrivacyPanel />

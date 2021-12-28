@@ -34,7 +34,7 @@ const Navbar = ({ authenticated }) => {
             >
               <XIcon className="lg:hidden h-7 w-7" />
             </button>
-            <ul className="flex md:hidden text-3xl md:text-base items-center py-10 lg:flex flex-col md:flex-row justify-center lg:ml-20 xl:-ml-20 fixed md:relative top-0 bottom-0 left-0 right-0 bg-[#111827] md:bg-transparent z-20 font-inter">
+            <ul className="flex md:hidden text-3xl md:text-base items-center py-10 lg:flex flex-col md:flex-row justify-center lg:ml-20 xl:-ml-20 fixed md:relative top-0 bottom-0 left-0 right-0 bg-[#111827] md:bg-transparent z-20">
               <li className="text-gray-200 hover:text-blue-500 font-medium cursor-pointer text-xl md:text-base pt-10 md:pt-0">
                 <a href="#link">Feature</a>
               </li>

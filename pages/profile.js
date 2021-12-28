@@ -1,19 +1,12 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
-import React, { useEffect } from "react";
+import React from "react";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import Spinner from "../components/shared/Spinner";
 import Sidebar from "../components/user/Sidebar";
 import { useAuth } from "../utils/auth/check-auth";
 
 const profile = () => {
-  const router = useRouter();
-  const { isAuthenticated, user, loading } = useAuth();
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/login");
-    }
-  }, [user]);
+  const { user, loading } = useAuth();
 
   if (loading) {
     return (

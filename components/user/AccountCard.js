@@ -47,7 +47,7 @@ const AccountCard = ({ user }) => {
                     src={
                       user.photoUrl
                         ? user.photoUrl
-                        : "https://avatars.dicebear.com/api/bottts/avatar.svg"
+                        : `https://avatars.dicebear.com/api/identicon/{${user?.id}}.svg`
                     }
                     alt={user.username}
                   />
@@ -56,7 +56,7 @@ const AccountCard = ({ user }) => {
             </div>
           </CopyToClipboard>
           <div>
-            <p className="text-xl text-gray-100 font-semibold mb-1">
+            <p className="text-xl text-gray-100 font-medium mb-1">
               {user.username}
             </p>
           </div>
